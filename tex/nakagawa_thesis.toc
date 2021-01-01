@@ -9,4 +9,11 @@
 \contentsline {subsubsection}{\numberline {2.2.2}アクチュエータ}{6}{subsubsection.2.2.2}%
 \contentsline {subsubsection}{\numberline {2.2.3}モータドライバ}{7}{subsubsection.2.2.3}%
 \contentsline {subsubsection}{\numberline {2.2.4}スライダクランク機構}{9}{subsubsection.2.2.4}%
-\contentsline {subsubsection}{\numberline {2.2.5}計測機器}{9}{subsubsection.2.2.5}%
+\contentsline {subsubsection}{\numberline {2.2.5}計測機器}{10}{subsubsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.3}ソフトウェア部}{12}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}dSPACEシステム}{12}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}解析モデル}{13}{subsubsection.2.3.2}%
+\contentsline {section}{\numberline {3.}アクチュエータの制御手法}{14}{section.3}%
+\contentsline {subsection}{\numberline {3.1}相対変位を用いた制御手法}{15}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}IDCSを用いた制御手法}{16}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}IDCS制御手法}{16}{subsubsection.3.2.1}%

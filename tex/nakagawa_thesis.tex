@@ -21,7 +21,7 @@
 
 \begin{center}
   % 論文題目
-  \jtitle{IDCS制御手法を用いたHILSシステムの検討}
+  \jtitle{$\%$IDCS制御手法を用いたHILSシステムの検討}
   \etitle{Investigation of HILS system using IDCS}
 \end{center}
 
@@ -77,7 +77,7 @@
 \subsection{研究目的}
 前述のように，HILSシステムは試験機の計測結果を用いた解析を行い，その解析結果に基づいて試験機のアクチュエータの入力を決定し特性評価を行うシステムである．HILSシステムはシミュレーション解析と実機試験の同期が必要であるため，高い制御精度が求められる．
 
-そこで本研究では，HILSシステムの再現性の向上を目的として，IDCSと呼ばれる制御手法を用いHILSシステムの制御精度の向上を行った．研究室で開発したHILS試験機を用いて，試験機の挙動と解析結果を比較することで，IDCSの有効性を検証した．また路面-車体間の相対変位を用いる制御手法による解析結果と，IDCSによる解析結果を比較し，IDCSによる制御の優位性を確認した．
+そこで本研究では，HILSシステムの再現性の向上を目的として，Inverse Dynamics Compensation via 'Simulation of feedback control systems'(IDCS)制御手法を用いHILSシステムの制御精度の向上を行った．研究室で開発したHILS試験機を用いて，試験機の挙動と解析結果を比較することで，IDCSの有効性を検証した．また路面-車体間の相対変位を用いる制御手法による解析結果と，IDCSによる解析結果を比較し，IDCSによる制御の優位性を確認した．
 
 
 % -------------------------------------
@@ -263,6 +263,7 @@ x_{0} =r\times \sin \theta _{A} +\sqrt{l^{2} -r^{2}\cos^{2} \theta _{A}} -\sqrt{
 %   \end{center}
 % \end{figure}
 
+\newpage
 \subsubsection{計測機器}
 本試験ではダンパが発生させるサスペンションストロークを計測する．ここでは計測に用いるロードセルとレーザ変位計について説明する．
 
@@ -384,7 +385,166 @@ x_{0} =r\times \sin \theta _{A} +\sqrt{l^{2} -r^{2}\cos^{2} \theta _{A}} -\sqrt{
   \end{minipage}
 \end{figure}
 
+\subsection{ソフトウェア部}
+\subsubsection{dSPACEシステム}
+本システムでは，dSPACE社製の開発環境であるdSPACEシステムを利用している．上下変位計算とハードウェア制御にはdSPACE社製のController Board「DS1104 Controller Board」を使用している．Controller Boardを図~\ref{fig:ds1104}に，Connector Panelを図~\ref{fig:conpane}に示す．Controller Boardは，デジタル入出力用チャンネル，A/Dコンバータ用チャンネル，D/Aコンバータ用チャンネルによるエンコーダの計測や，Serial Interfaceに対応しておりボーレート最大115200bpsのRS232通信が可能である．
 
+\vspace{10mm}
+\begin{figure}[h]
+    \begin{tabular}{c}
+      \begin{minipage}{0.5\hsize}
+	\begin{center}
+	  \includegraphics[height=25mm]{figure/ds1104.eps}
+	  \caption{Controller Borad\cite{dspace}}
+	  \label{fig:ds1104}
+	\end{center}
+      \end{minipage}
+      \begin{minipage}{0.5\hsize}
+	\begin{center}
+	  \includegraphics[height=25mm]{figure/conpane.eps}
+	  \caption{Connector Panel\cite{dspace}}
+	  \label{fig:conpane}
+	\end{center}
+      \end{minipage}
+    \end{tabular}
+\end{figure}
+
+Real-Time Interfaceは，dSPACE社製のハードウェアとMathWorks社製のソフトウェア「MATLAB/Simulink」の間のリンクとなるものである．これにより，Simulinkモデルを用いてdSPACEシステムの入出力機器と信号処理を行うことができる．また，MATLAB/Simulinkで作成されたモデルは，Simulink Corderにより，実時間で実行可能なCコードに変換され，Controller Board上で実行される．このような開発環境を構築することで，実時間シミュレーションを行うHILSシステムを実現している．制御インターフェースとしては，dSPACE社生のControl Deskを用いている．「MATLAB/Simulink」と関連付けることで，試験条件の設定やハードウェアへの指令値，計測値，車両運動解析の結果をモニタリングできる．また，リアルタイムで計測値や解析結果をグラフとして描画できる．図\ref{fig:contrl_desk}では指令値や計測値，上下変位計算の結果を表示したControl Deskの画面である．
+
+\vspace{10mm}
+\begin{figure}[h]
+ \centering
+ \includegraphics[height=30mm]{figure/control_desk.eps}
+ \vspace{2mm}
+  \caption{Control Desk}
+ \label{fig:control_desk}
+\end{figure}
+
+\newpage
+\subsubsection{解析モデル}
+本システムにおいて解析モデルは上下2自由度モデルを用いた．上下2自由度モデルは車両の上下動を表すことのできるモデルの一つである\cite{carbody_model}．モデル図を図~\ref{fig:analysis_model}に，諸元を表~\ref{tab:carbody_parameter}に示す．また，このモデルの運動方程式は以下である．
+
+\begin{eqnarray}
+ \label{eq:2dof_m1} &&m_1\ddot x_1 + k_1(x_1-x_0) + k_2(x_1-x_2) - f_c = 0\\
+ \label{eq:2dof_m2} &&m_2\ddot x_2 + k_2(x_2-x_1) + f_c = 0
+\end{eqnarray}
+
+\vspace{10mm}
+ここで，$m_1$はばね下質量 ，$m_2$はばね上質量，$k_1$，$k_2$はばね定数，$c_2$は減衰係数，$x_0$は路面変位，$x_1$はばね下変位，$x_2$はばね上変位である．そして，$f_c$はHILS試験機で計測されたダンパ力を用いる．
+
+\vspace*{10mm}
+\begin{figure}[htp]
+  \begin{minipage}{0.5\textwidth}
+    \begin{center}
+      \includegraphics[height=40mm]{figure/analysis_model.eps}
+      \vspace*{3mm}
+      \caption{Analysis Model}
+      \label{fig:analysis_model}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.5\textwidth}
+      \begin{center}
+	\makeatletter
+	\def\@captype{table}
+	\makeatother
+	\caption{Parameter of Analysis Model}
+	\label{tab:carbody_parameter}
+	  \begin{tabular}{cc}\hline
+	    Unsprung Mass $m_1$ [kg] & 1.5\\
+	    Sprung Mass $m_2$ [kg] & 6.9\\
+	    Spring constant $k_1$ [N/m] & 2200\\
+	    Spring constant $k_2$ [N/m] & 439\\\hline
+	  \end{tabular}
+	\end{center}
+  \end{minipage}
+\end{figure}
+
+\newpage
+\section{アクチュエータの制御手法}
+本研究で用いるアクチュエータの制御手法について説明する．アクチュエータへの入力$\bar{x_0}$は解析モデルの結果に基づいて決定される．ここで解析モデルは上下2自由度振動系であるのに対し，本研究で用いるHILS試験機はばね上が固定された1自由度振動系である．2自由度振動系の上下変位$x_2-x_1$は，1自由度振動系の$-\bar{x_1}$に対応する．自由度が異なるため，解析モデルの入力である路面変位$x_0$をHILS試験機のアクチュエータの入力$\bar{x_0}$にすることはできない．そのため，路面変位を解析モデルへ入力し，計算された上下変位$x_2-x_1$と試験機の$x-\bar{x_1}$が一致するようにアクチュエータを制御する．HILSシステムのブロック線図を図~\ref{fig:block_diagram}~に示す．
+
+%------- block diagram -------------
+\vspace*{10mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=60mm]{figure/block_diagram.eps}
+    \vspace*{3mm}
+    \caption{Block diagram of HILS system}
+    \label{fig:block_diagram}
+  \end{center}
+\end{figure}
+\newpage
+
+\subsection{相対変位を用いた制御手法}
+アクチュエータの制御手法として相対変位を用いた手法について説明する．解析モデルとHILS試験機の自由度の違いにより，アクチュエータへの入力$\bar{x_0}$は解析モデルの車体-路面間の相対変位$x_0-x_2$に基づいて決定する．ブロック線図を図~\ref{fig:relative_diagram}に示す．
+
+\vspace*{10mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=60mm]{figure/relative_diagram.eps}
+    \vspace*{3mm}
+    \caption{Block diagram of HILS system(relative)}
+    \label{fig:relative_diagram}
+  \end{center}
+\end{figure}
+\newpage
+
+%------- IDCS --------------
+\subsection{IDCSを用いた制御手法}
+続いてIDCSを用いた制御手法について説明する．
+\subsubsection{IDCS制御手法}
+Inverse Dynamics Compensation via 'Simulation of feedback control system'(IDCS)制御手法はシステムの順動力学モデルを用いたフィードバック制御シミュレーションにより近似的な逆動力学の計算を行う手法である\cite{method_idcs}．図~\ref{fig:idcs_block}にIDCS制御手法のブロック線図を示す．点線で囲まれた部分は数値シミュレーション環境であり，$P_m$は制御対象$P$を模擬したモデルである．制御器$K$と$P_m$で構築されるフィードバック制御系はシミュレーション上では理想的な制御を行えるため，$P_m$の出力$y_m$は目標値$r$に追従する．ここで$P_m$と$P$が同一であると考えると，$P$の出力$y$は目標値$r$に追従する．
+
+IDCS制御手法は，制御対象からの物理フィードバックを必要としないため，センサレスな制御が可能となっている．また点線部はシミュレーション環境であるため，制御器$K$はハイゲインに設定可能である．
+
+\vspace*{10mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=45mm]{figure/idcs_block.eps}
+    \vspace*{3mm}
+    \caption{Block diagram(IDCS)}
+    \label{fig:idcs_block}
+  \end{center}
+\end{figure}
+\newpage
+
+図~\ref{fig:idcs_block}~の点線で囲まれた部分は制御対象の逆動力学$P^{-1}$に対応している．図~\ref{fig:bode_inv_idcs}~に本研究の制御対象であるHILS試験機の逆伝達関数とIDCSの点線部の伝達関数のボード線図を示す．図~\ref{fig:hardware_model}~にHILS試験機のモデル図，表~\ref{tab:parameter_1dof}~にHILS試験機の諸元を示す．ボード線図から，IDCS制御系の制御器$K$の比例ゲインを大きくすることで，IDCS制御系の伝達関数はシステムの逆伝達関数に近づくことがわかる．
+
+\vspace*{10mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=60mm]{figure/bode_inverse.eps}
+    \caption{Comparison of inverse tranfer function and IDCS}
+    \label{fig:bode_inv_idcs}
+  \end{center}
+\end{figure}
+
+\vspace{10mm}
+\begin{figure}[h]
+  \begin{minipage}{0.4\hsize}
+     \begin{center}
+      \includegraphics[height=45mm]{figure/hardware_model.eps}
+	\vspace{2mm}
+      \caption{Hardware Model}
+      \label{fig:hardware_model}
+    \end{center}
+  \end{minipage}
+\begin{minipage}{0.6\hsize}
+\makeatletter
+\def\@captype{table}
+\makeatother
+  \begin{center}
+   \caption{Parameter of 1DOF Model}
+   \label{tab:parameter_1dof}
+   \begin{tabular}{cc}\hline
+      Unsprung Mass $m_1$ [kg] & 1.5  \\
+      Vertical spring stiffness $k_1$ [N/m] & 2200  \\
+      Spring constant $k_2$ [N/m] & 439   \\
+      Damping coefficient $c_2$ [N/m] & 7   \\ \hline
+    \end{tabular}
+   \end{center}
+ \end{minipage}
+\end{figure}
 
 
 \newpage
@@ -393,6 +553,10 @@ x_{0} =r\times \sin \theta _{A} +\sqrt{l^{2} -r^{2}\cos^{2} \theta _{A}} -\sqrt{
 \bibitem{exp_hils1}永井正夫，吉田秀久，Noomwongs Nuksit，横井隆，川眞田智，小林克宏，タイヤHIL シミュレータによる車両運動性能の研究(第1報) : タイヤHIL シミュレータの開発，自動車技術会論文集，Vol35，No.2，(2004)，pp.147-152
 \bibitem{exp_hils2}山口輝也, 実ヨーダンパを用いたHardware-In-the-Loopシミュレーションによる鉄道車両の蛇行動安定性試験(試験環境の構築と安定的な検証), 日本機械学会論文集,C編Vol.79 No.806(2013-10),pp.131-142
 \bibitem{toyota_hils}https://www.toyota.co.jp/jpn/company/history/75years/data/automotive\_business/ \\ products\_technology/technology\_development/performance/images/supplement\_img01.jpg
+\bibitem{dspace}http://www.dspace.com/ja/jpn/home.cfm
+\bibitem{carbody_model}社団法人\ 自動車技術会，自動車技術ハンドブック5設計(シャシ)編，社団法人\ 自動車技術会，(1990)，p. 25
+\bibitem{method_idcs}青木 健悟，IDCSを用いた柔軟アームを有するロボットの振動制御，日本ロボット学会誌，Vol.31，No.10，(2010)，pp.1001-1008
+
 
 \bibitem{daisyarin}大車林，三栄書房，(2003)
 \bibitem{thesis_airpot}Keita Koumo, Naoto Abe, Taichi Matsuoka, Switching Control based on the mode of vibration for Dynamic Absorber, IEEE Control Conference (ASCC), 2015 10th Asian
