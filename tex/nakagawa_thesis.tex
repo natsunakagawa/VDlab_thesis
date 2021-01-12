@@ -21,7 +21,7 @@
 
 \begin{center}
   % 論文題目
-  \jtitle{$\%$IDCS制御手法を用いたHILSシステムの検討}
+  \jtitle{IDCS制御手法を用いたHILSシステムの検討}
   \etitle{Investigation of HILS system using IDCS}
 \end{center}
 
@@ -33,7 +33,8 @@
 \newpage
 \section{序論}
 \subsection{タイヤとサスペンション}
-タイヤは自動車において唯一路面と接触する要素であり，自動車の基本的な機能である「走る」「曲がる」「止まる」といった運動は，すべて路面とタイヤとの間に発生する摩擦力によって実現している．そのため，タイヤは車両運動に直接影響を与える重要なようであると言える．したがって，タイヤの特性を十分理解することで車両の運動特性を把握し，その性能を十分に発揮させることができる．タイヤの状態に影響を及ぼす要因として，車体とタイヤを連結するサスペンション機構が挙げられる．車体重量を支持すると共に，車輪の上下振動を緩和，吸収して，振動が車体に直接伝達されることを防止する．また，路面間に発生する駆動力，制動力，横力など各種の路面反力を車体に伝達することで，車両運動性能に影響を与える．したがって，車両運動特性を把握するためには，タイヤとサスペンションを複合的に評価する必要がある．
+タイヤは自動車において唯一路面と接触する要素であり，自動車の基本的な機能である「走る」「曲がる」「止まる」といった運動は，すべてタイヤと路面の接触面に発生する摩擦力によって実現している\cite{uno}．そのため，タイヤの特性を十分理解することで車両の運動特性を把握し，その運動性能を十分に発揮させることができる\cite{nasugawa}．タイヤの状態に影響を及ぼす要因として，車体とタイヤを連結するサスペンション機構が挙げられる．サスペンションは路面入力の緩衝装置であるが，安定したコーナリングを作るためにも重要である．つまり，車の挙動を安定させタイヤの性能を十分に引き出すことがサスペンションの重要な機能である．したがって，車両運動性能を把握するためには，タイヤとサスペンションを複合的に評価する必要がある．
+
 % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 % suspension
 %  ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -54,7 +55,7 @@
 % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 \newpage
 \subsection{Hardware-in-the-Loop Simulation(HILS)システム}
-車両運動性能を車両運動性能を評価する手法として，シミュレーションや実写走行試験などが挙げられる．しかし，シミュレーションでは，評価対象のモデル化誤差が障子，実写走行試験では，同一条件での試験が困難である．このような問題を解決するシステムとしてHILSシステムが用いられている\cite{exp_hils1}．HILSとはHardware-in-the-Loop Simulationの略であり，リアルタイムシミュレーションを用いたシステム評価手法である．解析で得た値を目標値として実機を動かし，実機を動かす子によって得た計測値を用いて解析を行う．従来の時刻歴シミュレーションと実機試験のそれぞれの欠点を補完するようなものとなり，シミュレーション精度の向上を図りながら，試験に必要なコストを抑え，試験の自由度を確保することができる．このため，部品開発の一段階としてHILSを導入することで，制度と効率の両面において質の高い試験が可能となり，開発の大幅な効率化が期待できる\cite{exp_hils2}.
+車両運動性能を評価する手法として，シミュレーションや実写走行試験などが挙げられる．しかし，シミュレーションでは評価対象のモデル化誤差が生じ，実写走行試験では同一条件での試験が困難である．このような問題を解決するシステムとしてHILSシステムが用いられている\cite{exp_hils1}．HILSとはHardware-in-the-Loop Simulationの略であり，解析で得た値を目標値として実機を動かし，実機を動かすことによって得た計測値を用いてリアルタイムに解析し，実機を動かすことによって特性評価を行う手法である．．従来のシミュレーションと実機試験のそれぞれの欠点を補完するようなものとなり，シミュレーション精度の向上を図りながら，試験に必要なコストを抑え，試験の自由度を確保することができる．このため，部品開発の一段階としてHILSを導入することで，制度と効率の両面において質の高い試験が可能となり，開発の大幅な効率化が期待できる\cite{exp_hils2}.
 
 % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 % hils
@@ -422,12 +423,14 @@ Real-Time Interfaceは，dSPACE社製のハードウェアとMathWorks社製の�
 
 \newpage
 \subsubsection{解析モデル}
-本システムにおいて解析モデルは上下2自由度モデルを用いた．上下2自由度モデルは車両の上下動を表すことのできるモデルの一つである\cite{carbody_model}．モデル図を図~\ref{fig:analysis_model}に，諸元を表~\ref{tab:carbody_parameter}に示す．また，このモデルの運動方程式は以下である．
+本システムにおいて解析モデルは上下2自由度モデルを用いた．上下2自由度モデルは車両の上下動を表すことのできるモデルの一つである\cite{carbody_model}．モデル図を図~\ref{fig:analysis_model}に，諸元を表~\ref{tab:carbody_parameter}に示す．また，このモデルの運動方程式は以下のとおりである．
 
 \begin{eqnarray}
  \label{eq:2dof_m1} &&m_1\ddot x_1 + k_1(x_1-x_0) + k_2(x_1-x_2) - f_c = 0\\
  \label{eq:2dof_m2} &&m_2\ddot x_2 + k_2(x_2-x_1) + f_c = 0
 \end{eqnarray}
+
+ここで，$m_1$はばね下質量 ，$m_2$はばね上質量，$k_1$，$k_2$はばね定数，$f_c$はダンパ力，$x_0$は路面変位，$x_1$はばね下変位，$x_2$はばね上変位である
 
 \vspace{10mm}
 ここで，$m_1$はばね下質量 ，$m_2$はばね上質量，$k_1$，$k_2$はばね定数，$c_2$は減衰係数，$x_0$は路面変位，$x_1$はばね下変位，$x_2$はばね上変位である．そして，$f_c$はHILS試験機で計測されたダンパ力を用いる．
@@ -464,62 +467,65 @@ Real-Time Interfaceは，dSPACE社製のハードウェアとMathWorks社製の�
 本研究で用いるアクチュエータの制御手法について説明する．アクチュエータへの入力$\bar{x_0}$は解析モデルの結果に基づいて決定される．ここで解析モデルは上下2自由度振動系であるのに対し，本研究で用いるHILS試験機はばね上が固定された1自由度振動系である．2自由度振動系の上下変位$x_2-x_1$は，1自由度振動系の$-\bar{x_1}$に対応する．自由度が異なるため，解析モデルの入力である路面変位$x_0$をHILS試験機のアクチュエータの入力$\bar{x_0}$にすることはできない．そのため，路面変位を解析モデルへ入力し，計算された上下変位$x_2-x_1$と試験機の$x-\bar{x_1}$が一致するようにアクチュエータを制御する．HILSシステムのブロック線図を図~\ref{fig:block_diagram}~に示す．
 
 %------- block diagram -------------
-\vspace*{10mm}
+\vspace*{7mm}
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[height=60mm]{figure/block_diagram.eps}
+    \includegraphics[height=40mm]{figure/block_diagram.eps}
     \vspace*{3mm}
     \caption{Block diagram of HILS system}
     \label{fig:block_diagram}
   \end{center}
 \end{figure}
-\newpage
 
 \subsection{相対変位を用いた制御手法}
 アクチュエータの制御手法として相対変位を用いた手法について説明する．解析モデルとHILS試験機の自由度の違いにより，アクチュエータへの入力$\bar{x_0}$は解析モデルの車体-路面間の相対変位$x_0-x_2$に基づいて決定する．ブロック線図を図~\ref{fig:relative_diagram}に示す．
 
-\vspace*{10mm}
+\vspace*{7mm}
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[height=60mm]{figure/relative_diagram.eps}
+    \includegraphics[height=40mm]{figure/relative_diagram.eps}
     \vspace*{3mm}
     \caption{Block diagram of HILS system(relative)}
     \label{fig:relative_diagram}
   \end{center}
 \end{figure}
-\newpage
 
 %------- IDCS --------------
 \subsection{IDCSを用いた制御手法}
-続いてIDCSを用いた制御手法について説明する．
-\subsubsection{IDCS制御手法}
-Inverse Dynamics Compensation via 'Simulation of feedback control system'(IDCS)制御手法はシステムの順動力学モデルを用いたフィードバック制御シミュレーションにより近似的な逆動力学の計算を行う手法である\cite{method_idcs}．図~\ref{fig:idcs_block}にIDCS制御手法のブロック線図を示す．点線で囲まれた部分は数値シミュレーション環境であり，$P_m$は制御対象$P$を模擬したモデルである．制御器$K$と$P_m$で構築されるフィードバック制御系はシミュレーション上では理想的な制御を行えるため，$P_m$の出力$y_m$は目標値$r$に追従する．ここで$P_m$と$P$が同一であると考えると，$P$の出力$y$は目標値$r$に追従する．
+\label{sec:method_idcs}
+続いてIDCSを用いた制御手法について説明する．Inverse Dynamics Compensation via 'Simulation of feedback control system'(IDCS)制御手法はシステムの順動力学モデルを用いたフィードバック制御シミュレーションにより近似的な逆動力学の計算を行う手法である\cite{method_idcs}．図~\ref{fig:idcs_block}にIDCS制御手法のブロック線図を示す．点線で囲まれた部分は数値シミュレーション環境であり，$P_m$は制御対象$P$を模擬したモデルである．制御器$K$と$P_m$で構築されるフィードバック制御系はシミュレーション上では理想的な制御を行えるため，$P_m$の出力$y_m$は目標値$r$に追従する．ここで$P_m$と$P$が同一であると考えると，$P$の出力$y$は目標値$r$に追従する．
 
 IDCS制御手法は，制御対象からの物理フィードバックを必要としないため，センサレスな制御が可能となっている．また点線部はシミュレーション環境であるため，制御器$K$はハイゲインに設定可能である．
 
 \vspace*{10mm}
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[height=45mm]{figure/idcs_block.eps}
+    \includegraphics[height=40mm]{figure/idcs_block.eps}
     \vspace*{3mm}
     \caption{Block diagram(IDCS)}
     \label{fig:idcs_block}
   \end{center}
 \end{figure}
+
 \newpage
 
-図~\ref{fig:idcs_block}~の点線で囲まれた部分は制御対象の逆動力学$P^{-1}$に対応している．図~\ref{fig:bode_inv_idcs}~に本研究の制御対象であるHILS試験機の逆伝達関数とIDCSの点線部の伝達関数のボード線図を示す．図~\ref{fig:hardware_model}~にHILS試験機のモデル図，表~\ref{tab:parameter_1dof}~にHILS試験機の諸元を示す．ボード線図から，IDCS制御系の制御器$K$の比例ゲインを大きくすることで，IDCS制御系の伝達関数はシステムの逆伝達関数に近づくことがわかる．
+図~\ref{fig:idcs_block}~の点線で囲まれた部分は制御対象の逆動力学$P^{-1}$に対応している．図~\ref{fig:bode_inv_idcs}~に本研究の制御対象であるHILS試験機の逆伝達関数とIDCSの点線部の伝達関数のボード線図を示す．式(~\ref{eq:1dof}~)にIDCS制御系内の試験機を模擬したモデルの運動方程式，図~\ref{fig:hardware_model}~にHILS試験機のモデル図，表~\ref{tab:parameter_1dof}~にHILS試験機の諸元を示す，ボード線図から，IDCS制御系の制御器$K$の比例ゲインを大きくすることで，IDCS制御系の伝達関数はシステムの逆伝達関数に近づくことがわかる．
 
-\vspace*{10mm}
+\begin{equation}
+  m_1\ddot{\bar{x}}_1+c_2\dot{\bar{x}}_1+k_1(\bar{x}_1-\bar{x}_0)+k_2\bar{x}_1=0 \label{eq:1dof}
+\end{equation}
+
+ここで，$m_1$はタイヤ質量 ,$k_1$はタイヤの縦ばね剛性，$k_2$はばね定数，$c_2$は減衰係数，$\bar{x}_0$はHILS試験機の路面部変位，$\bar{x}_1$はタイヤ変位である．
+
+\vspace{7mm}
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[height=60mm]{figure/bode_inverse.eps}
-    \caption{Comparison of inverse tranfer function and IDCS}
+    \includegraphics[height=65mm]{figure/bode_inverse.eps}
+    \caption{Comparison of inverse transfer function and IDCS}
     \label{fig:bode_inv_idcs}
   \end{center}
 \end{figure}
-
-\vspace{10mm}
+\vspace{7mm}
 \begin{figure}[h]
   \begin{minipage}{0.4\hsize}
      \begin{center}
@@ -529,6 +535,7 @@ IDCS制御手法は，制御対象からの物理フィードバックを必要�
       \label{fig:hardware_model}
     \end{center}
   \end{minipage}
+  \vspace{7mm}
 \begin{minipage}{0.6\hsize}
 \makeatletter
 \def\@captype{table}
@@ -545,10 +552,51 @@ IDCS制御手法は，制御対象からの物理フィードバックを必要�
    \end{center}
  \end{minipage}
 \end{figure}
+\newpage
+
+IDCS制御系を組み込んだHILSシステムのブロック線図を図~\ref{fig:idcs_diagram}~に示す．
+
+\vspace*{7mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=90mm]{figure/idcs_diagram.eps}
+    \vspace*{3mm}
+    \caption{Block diagram of HILS system(IDCS)}
+    \label{fig:idcs_diagram}
+  \end{center}
+\end{figure}
+\newpage
+
+\section{制御手法によるHILSシステムの評価}
+\subsection{シミュレーションによる評価}
+HILSシステムを用いて試験する前にハードウェア部を1自由度モデルに置き換え，シミュレーションを行った．シミュレーション時の相対変位による制御手法のブロック線図を図~\ref{fig:sim_block_relative}~に，IDCS制御手法のブロック線図を図~\ref{fig:sim_block_idcs}~に示す．解析モデルで計算したサスペンションストロークとハードウェアのモデルで計算されたサスペンションストロークを比較し，各制御手法の評価を行う．今回，HILS試験機のサスペンションストロークの範囲が25mmであるため，その範囲を超えない上でシミュレーションを行った．ハードウェアのモデルは~\ref{sec:method_idcs}~節で述べたモデルを用いる．
+
+\vspace*{5mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=45mm]{figure/sim_block_diagram(relative).eps}
+    \vspace*{3mm}
+    \caption{Block diagram in simulation(Relative)}
+    \label{fig:sim_block_relative}
+  \end{center}
+\end{figure}
+
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=85mm]{figure/sim_block_diagram(idcs).eps}
+    \vspace*{3mm}
+    \caption{Block diagram in simulation(IDCS)}
+    \label{fig:sim_block_idcs}
+  \end{center}
+\end{figure}
+
+% ----------シミュレーション結果を載せるよ~ ---------------------
 
 
 \newpage
 \begin{thebibliography}{99}
+\bibitem{uno}宇野高明，車両運動性能とシャシーメカニズム，グランプリ出版，1994
+\bibitem{nasugawa}茄子川捷久，宮下義孝，汐川満則，自動車の走行性能と試験方法，山海堂，2004
 \bibitem{pic_sus.net}https://nge.jp/wp-content/uploads/2015/08/shutterstock\_22066612.jpg
 \bibitem{exp_hils1}永井正夫，吉田秀久，Noomwongs Nuksit，横井隆，川眞田智，小林克宏，タイヤHIL シミュレータによる車両運動性能の研究(第1報) : タイヤHIL シミュレータの開発，自動車技術会論文集，Vol35，No.2，(2004)，pp.147-152
 \bibitem{exp_hils2}山口輝也, 実ヨーダンパを用いたHardware-In-the-Loopシミュレーションによる鉄道車両の蛇行動安定性試験(試験環境の構築と安定的な検証), 日本機械学会論文集,C編Vol.79 No.806(2013-10),pp.131-142
