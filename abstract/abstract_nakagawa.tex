@@ -53,10 +53,22 @@ HILSとは，Hardware-in-the-Loop Simulationの略称であり，対象のハー
 
 本研究では，自動車のタイヤ―サスペンション系の上下動を再現するHILSシステムを対象として，アクチュエータの制御手法を検討し，HILSシステムの再現性の向上を図る．制御手法にはIDCS制御手法を用いた．ハードウェアの挙動と解析結果を比較することで，検討した制御手法におけるHILSシステムの再現性の影響を評価した．
 
+\vspace{4mm}
 \section{HILSシステム}
 \subsection{HILSシステムの概要}
-本研究で使用するHILSシステムの概要を図\ref{}に示す．このHILSシステムは自動車のタイヤ―サスペンション系の上下動を試験機で再現するシステムである．HILSシステムの構成は，車両運動解析やシステム制御を行うソフトウェア部と，試験装置があるハードウェア部からなる．本システムでは試験装置のばね上-ばね下相対変位が解析結果と一致するように制御を行う．解析モデルには上下2自由度振動系を用い，計測されたダンパの減衰力を用いて解析を行う．試験装置の路面下部にはアクチュエータであるモータが取り付けられており，上記の解析結果に基づいて入力値が決定されるため，上下挙動の再現が可能である．
+本研究で使用するHILSシステムの概要を図\ref{fig:HILS}に示す．このHILSシステムは自動車のタイヤ―サスペンション系の上下動を試験機で再現するシステムである．HILSシステムの構成は，車両運動解析やシステム制御を行うソフトウェア部と，試験装置があるハードウェア部からなる．本システムでは試験装置のばね上-ばね下相対変位が解析結果と一致するように制御を行う．解析モデルには上下2自由度振動系を用い，計測されたダンパの減衰力を用いて解析を行う．試験装置の路面下部にはアクチュエータであるモータが取り付けられており，上記の解析結果に基づいて入力値が決定されるため，上下挙動の再現が可能である．
 
+\vspace*{3mm}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[height=60mm]{figure/HILS_loop.eps}
+    \vspace*{-1mm}
+    \caption{System overview of Tire-Suspension HILS system}
+    \label{fig:HILS}
+  \end{center}
+\end{figure}
+
+\newpage
 \subsection{解析モデル}
 解析モデルに用いた上下2自由度モデルは，車両の上下動を表すことのできるモデルである\cite{2dof}．上下2自由度モデルを図\ref{fig:analysis_model}に示す．モデルの諸元を表\ref{tab:parameter}に示す．また，このモデルの運動方程式は以下の通りである．
 
@@ -66,14 +78,13 @@ HILSとは，Hardware-in-the-Loop Simulationの略称であり，対象のハー
  \label{eq:2dof_m2} &&m_2\ddot x_2 + k_2(x_2-x_1) + f_c = 0
 \end{eqnarray}
 
-ここで，$m_1$はばね下質量 ，$m_2$はばね上質量，$k_1$，$k_2$はばね定数，$f_c$はダンパ力，$x_0$は路面変位，$x_1$はばね下変位，$x_2$はばね上変位である．
+ここで，$m_1$はばね下質量 ，$m_2$はばね上質量，$k_1$，$k_2$はばね定数，$f_c$はダンパ力，$x_0$は路面変位，$x_1$はばね下変位，$x_2$はばね上変位である．この解析モデルを用いて路面変位$x_0$に対するサスペンションストローク$x_2-x_1$を計算し，HILS試験機で再現する．
 
 \begin{figure}[H]
   \begin{minipage}{0.5\hsize}
     \begin{center}
       \includegraphics[height=30mm]{figure/analysis_model.eps}
-      \vspace*{1mm}
-      \caption{Analysis Model}
+      \caption{Analysis model}
     \label{fig:analysis_model}
     \end{center}
   \end{minipage}
@@ -94,17 +105,39 @@ HILSとは，Hardware-in-the-Loop Simulationの略称であり，対象のハー
   \end{minipage}
 \end{figure}
 
+\vspace{2mm}
 \subsection{試験機}
-本研究で使用するHILS試験機を図\ref{eq:2dof_m1}に示す．この装置は上下1自由度で
+本研究で使用するHILS試験機を図\ref{eq:testing_machine}に示す．この装置は上下1自由度で，タイヤ―サスペンション系をばね下，ばね，ダンパで表している．路面部にアクチュエータを取り付けており，アクチュエータの入力$\bar{x}_0$はソフトウェア部の解析結果に基づいて決定する．解析モデルと装置ではシステムの自由度が異なるため，入力$\bar{x}_0$に対する試験機のばね上ばね下間変位$-\bar{x}_1$で解析モデルのサスペンションストロークを再現している．ばね上ばね下間変位，ダンパ力はレーザ変位計，ロードセルを用いて計測している．
 
+\vspace{5mm}
+\begin{figure}[H]
+ \centering
+ \includegraphics[height=50mm]{figure/HILS_machine.eps}
+ \vspace{-8mm}
+  \caption{HILS testing machine}
+ \label{fig:testing_machine}
+\end{figure}
 
+\newpage
 \section{IDCS制御手法}
+Inverse Dynamics Compensation via 'Simulation of feedback control system'(IDCS)制御手法はシステムの順動力学を用いたフィードバック制御シミュレーションにより近似的な逆動力学の計算を行う手法である\cite{method_idcs}．図~\ref{fig:idcs_block}にIDCS制御手法のブロック線図を示す．点線で囲まれた部分は数値シミュレーション環境であり，$P_m$は試験機$P$を模擬したモデルである．制御器$K$と$P_m$で構築されるフィードバック制御系はシミュレーション上では理想的な制御を行えるため，$P_m$の出力$y_m$は目標値$r$に追従する．ここで$P_m$と$P$が同一であると考えると，$P$の出力$y$は目標値$r$に追従する．
+
+\vspace*{3mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=30mm]{figure/idcs_block.eps}
+    \vspace*{1mm}
+    \caption{Block diagram(IDCS)}
+    \label{fig:idcs_block}
+  \end{center}
+\end{figure}
 
 \section{HILS試験}
 
 \begin{thebibliography}{99}
 \bibitem{hils}永井正夫，吉田秀久，Noomwongs Nuksit，横井隆，川眞田智，小林克宏，タイヤHILシミュレータによる車両運動性のの研究(第1報)：タイヤHILシミュレータの開発，自動車記述会論文集，Vol.35，No.2，(2004)，pp.147-152
 \bibitem{2dof}社団法人 自動車技術会，自動車技術ハンドブック5設計(シャシ)編，社団法人 自動車技術会，(1990)，p.25
+\bibitem{method_idcs}青木 健悟，IDCSを用いた柔軟アームを有するロボットの振動制御，日本ロボット学会誌，Vol.31，No.10，(2010)，pp.1001-1008
 \end{thebibliography}
 
 \end{document}

@@ -1,0 +1,503 @@
+% Kuramoto_abstract.tex
+% #################################################################################################
+
+\documentclass{article_vdlab_sotsuron_youshi}
+\pagestyle{empty}
+
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{comment}
+\usepackage{here}
+
+%２段組みの段組み間間隔を設定
+\columnsep=1.5cm
+
+\begin{document}
+%文字間隔の設定
+\kanjiskip = .7pt plus3pt minus 3pt
+\xkanjiskip = .7pt plus 3pt minus 3pt
+\small
+\setstretch{1.1}
+
+%図回りの余白を設定
+\setlength{\abovecaptionskip}{0mm}
+\setlength{\belowcaptionskip}{0mm}
+\setlength{\floatsep}{0mm}
+\setlength{\textfloatsep}{0mm}
+\setlength{\intextsep}{3mm}
+\setlength{\dblfloatsep}{0mm}
+\setlength{\dbltextfloatsep}{0mm}
+
+% #################################################################################################
+
+\twocolumn[
+  \begin{center}
+    % 論文題目と氏名
+    \jtitle{HILSにおけるモデル化誤差の影響評価}
+    \jauthors{蔵本　萌奈美}
+    \etitle{Evaluation of Effects of Modeling error in Hardware-in-the-Loop Simulation}
+    \eauthors{Monami Kuramoto}
+  \end{center}
+]
+
+%文字間隔の設定
+\kanjiskip = .7pt plus3pt minus 3pt
+\xkanjiskip = .7pt plus 3pt minus 3pt
+\small
+\setstretch{1.1}
+
+
+\section{緒言}
+車両開発において，シミュレーションや実車走行試験による車両運動性能の評価が行われている．
+シミュレーションによる評価は，路面状況や天候などの影響を受けずに同一条件での試験が可能である．また，実車走行試験では，ハードウェアの非線形特性を考慮した評価が可能である．これらを組み合わせた評価手法として，Hardware-in-the-Loop Simulation( 以下HILS )がある．HILSシステムは評価対象の一部をハードウェアとしてシミュレーションのループ内に組込み特性を評価する手法であり，開発期間の短縮や品質の向上に寄与する重要なツールとなっている\cite{1}．
+HILSシステムでは，解析モデルの計算結果に基づきアクチュエータへの入力を決定するため解析モデルの精度が重要である．
+\par
+本研究では，新たにHILSシステムを開発しモデル化誤差の影響を評価した．また，自動車のタイヤ-サスペンション系の上下挙動を模擬するHILS試験機をハードウェアとして用いた．そして，解析モデルの計算結果とハードウェアの挙動を比較することで，モデル化誤差がHILSシステムに及ぼす影響を評価した．
+
+\vspace{1mm}
+\section{HILSシステム}
+本研究で開発したHILSシステムの概要を図\ref{fig:overviewhils}に示す．
+このシステムのハードウェア部は新たに開発したHILS試験機を用いる．
+ハードウェア部で計測したダンパ力を用いて，ソフトウェア部で解析モデルによる上下変位計算を行う．
+また，ソフトウェア部の計算結果のサスペンションストロークに基づきアクチュエータへの入力を決定する．
+% % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+% % Overview of HILS system
+% %  ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+ \vspace{-1mm}
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=55mm]{figure/hils_overview_2_2.eps}
+  \vspace{-2mm}
+   \caption{Overview of HILS System}
+  \label{fig:overviewhils}
+\end{figure}
+
+% % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+\vspace{-1mm}
+ハードウェア部で用いるHILS試験機を図~\ref{HILSmachine}に示す．
+この装置は上下1自由度で路面部にアクチュエータを取り付けている．
+自動車の車体をばね上で，タイヤ-サスペンション系をばね下とばね，ダンパで表現している．
+ソフトウェア部で計算したサスペンションストロークをばね上ばね下間の変位として実現している．
+また，レーザ変位計とロードセルを用いて，サスペンションストロークとダンパ力を計測している．
+\par
+シミュレーションで用いる解析モデルは，上下2自由度モデルを用いた\cite{2}．
+このモデルを図~\ref{fig:2DOF}~に示す．
+運動方程式は式~(\ref{eq:2DOF_1})~，~(\ref{eq:2DOF_2})~ に示す．
+
+\vspace{10mm}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[height=45mm]{figure/HILS_machine_E.eps}
+  \vspace{-1mm}
+   \caption{HILS Testing machine}
+  \label{HILSmachine}
+\end{figure}
+
+
+\vspace*{-8mm}
+\begin{flalign}
+\label{eq:2DOF_1}
+\ & m_1\ddot{x_1}+k_1(x_1-x_0)+k_2(x_1-x_2)-f_c=0
+\end{flalign}
+\vspace{-8mm}
+\begin{flalign}
+\label{eq:2DOF_2}
+\ & m_2\ddot{x_2}+k_2(x_2-x_1)+f_c=0
+\end{flalign}
+
+
+% \vspace*{-6mm}
+% \begin{flalign}
+% \label{eq:2DOF_1}
+% \ & m_1\ddot{x_1}+c_2({\dot{x_1}-\dot{x_2}})+k_1(x_1-x_0)+k_2(x_1-x_2)=0
+% \end{flalign}
+% \vspace{-8mm}
+% \begin{flalign}
+% \label{eq:2DOF_2}
+% \ & m_2\ddot{x_2}+c_2({\dot{x_2}-\dot{x_1}})+k_2(x_2-x_1)=0
+% \end{flalign}
+
+%  ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+% Tire testing machine
+%  ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+\vspace{-1mm}
+\noindent
+ここで，$m_2$はばね上質量，$m_1$はばね下質量，$k_2$はばね定数，$k_1$はタイヤの縦ばね剛性
+，$x_0$は路面変位，$x_1$はばね下変位，$x_2$はばね上変位である．また，$f_c$はHILS試験機で計測したダンパ力を用いる．
+
+% ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+%2dof Vehicel Model
+% ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+\vspace{-2mm}
+\begin{figure}[h]
+  \begin{minipage}{0.5\hsize}
+     \begin{center}
+      \includegraphics[height=25mm]{figure/model_2dof_f.eps}
+      \end{center}
+      \begin{center}
+	\vspace{-2mm}
+      \ Analysis model
+      \label{fig:2DOF}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.5\hsize}
+     \begin{center}
+      \includegraphics[height=25mm]{figure/model_1dof.eps}
+      \end{center}
+      \begin{center}
+	\vspace{-2mm}
+      \ Hardware model
+      \label{fig:1DOF}
+    \end{center}
+  \end{minipage}
+% \begin{minipage}{0.3\hsize}
+% \vspace{-2mm}
+% \makeatletter
+% \def\@captype{table}
+% \makeatother
+%   \begin{center}
+% 
+%    \caption{Specification}
+%    \label{tab:2DOF}
+%      \hspace{-4mm}
+%    \begin{tabular}{cc}\hline
+%       $m_2$ [kg] & 6.4  \\
+%       $m_1$ [kg] & 1.5 \\ 
+%       $k_2$ [N/m] & 405  \\
+%       $k_1$ [N/m] & 2200   \\
+%       $c_2$ [N/m] & 7  \\ \hline
+%     \end{tabular}
+%    \end{center}
+%  \end{minipage}
+\vspace{2mm}
+\caption{Model}
+\end{figure}
+
+\vspace{-2mm}
+\par
+この解析モデルを用いて路面変位$x_0$に対するサスペンションストローク$x_2-x_1$を計算し，HILS試験機で実現する．
+このシステムのブロック線図を図~\ref{fig:block_HILS}~に示す．
+解析モデルとハードウェアではシステムの自由度が異なるため，ハードウェアの入力$\bar{x}_0$に対する出力$-\bar{x}_1$の逆伝達関数を同定し，アクチュエータの指令値計算において考慮する必要がある．このモデルを図~\ref{fig:1DOF}~に，運動方程式は式~(\ref{eq:1DOF})~に示す．このとき，逆モデルの計算を行うためダンパは線形とし，装置の周波数応答から$c_2$をパラメータ同定した．また，$\bar{x}_0$はHILS試験機の路面部変位，$\bar{x}_1$はばね下部変位である．
+
+\vspace*{-4mm}
+\begin{flalign}
+\label{eq:1DOF}
+\ & m_1\ddot{\bar{x}}_1+c_2\dot{\bar{x}}_1+k_1(\bar{x}_1-\bar{x}_0)+k_2\bar{x}_1=0
+\end{flalign}
+
+\vspace{-3mm}
+\begin{figure}[h]
+  \centering
+   \includegraphics[height=30mm]{figure/block_HILS.eps}
+  \vspace{2mm}
+\caption{Block diagram}
+  \label{fig:block_HILS}
+\end{figure}
+
+%*************************************************************************************************
+
+\section{モデル化誤差の影響評価}
+% 本システムではHILS試験機へ路面入力を行うためにアクチュエータとして，ECサーボモータを用いる．
+% このモータ単体の応答性を，指令変位に対する出力変位の伝達関数を算出し確認した．
+% 本試験機で評価する周波数10Hzまでの範囲においてモータは指令値に対して十分に応答していた．
+
+% 図~\ref{fig:bode_motor}~に指令変位に対する出力変位の結果を示す
+% % \vspace{1mm}
+% \begin{figure}[h]
+%   \centering
+%    \includegraphics[height=25mm]{figure/sweep_serial_gain.eps}
+%   \vspace{-2mm}
+% \caption{Bode diagram}
+%   \label{fig:bode_motor}
+% \end{figure}
+
+本研究では，HILSシステムのフィードバック要素としてダンパ力を用いている．
+ここで，HILS試験機においてロードセルを用いてダンパ力を計測した．振幅~7~mm~振動数~2~Hz~の正弦波状の路面変位を与えた場合の速度に対するダンパ力の図を示す．
+図~\ref{fig:damp_sys}~の(A)に線形ダンパで計算した結果を，(B)に実際のダンパ力の計測結果を示す．
+線形でモデル化したダンパ力の傾きは一定であるのに対し，計測したダンパ力は非線形な力を生じている．このように，ダンパは複雑な特性を有するため，本システムのフィードバック要素として用いることにした．
+
+\vspace{0mm}
+\begin{figure}[h]
+  \begin{minipage}{0.5\hsize}
+   \centering
+   \includegraphics[height=30mm]{figure/damp_sys_liner.eps}
+%   \vspace{-2mm}
+  \begin{center}
+    \vspace{-4mm}
+      \ (A) Liner damper \
+      \end{center}
+  \end{minipage}
+  \begin{minipage}{0.5\hsize}
+   \centering
+   \includegraphics[height=30mm]{figure/damp_sys.eps}
+%    \vspace{-2mm}
+  \begin{center}
+    \vspace{-4mm}
+      \ (B) Measurement \
+      \end{center}
+    \end{minipage}
+  \vspace{-2mm}
+  \caption{Damper force}
+  \label{fig:damp_sys}
+\end{figure}
+
+% % % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+% % % Step
+% % %  ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+% \vspace{2mm}
+% \begin{figure}[h]
+%     \begin{tabular}{c}
+%       \begin{minipage}{0.4\hsize}
+% 	\centering
+% 	\includegraphics[height=25mm]{figure/step_2.eps}
+% 	\begin{center}
+% 	\vspace{-4mm}
+% 	 \ (A) Input (Step 2mm) \
+% 	  \end{center} 
+% 	\end{minipage}
+%        \begin{minipage}{0.6\hsize}
+% 	\centering
+% 	  \includegraphics[height=25mm]{figure/fig_damper.eps}
+% 	  \begin{center}
+% 	  \vspace{-4mm}
+% 	 \ (B) Result\
+% 	  \end{center} 
+%       \end{minipage}
+%     \end{tabular}
+%     \vspace{-2mm}
+%     \caption{Damper force}
+%     \label{fig:damp_sys}
+% \end{figure}
+
+
+\vspace{-1mm}
+\par
+計測したダンパ力を用いてHILSシステムを構築した結果を示す．図~\ref{fig:hils_step}に解析モデルで計算したサスペンションストロークと，レーザ変位計を用いて計測したサスペンションストロークの比較結果を示す．
+図~\ref{fig:hils_step}の(A)に振幅~7~mm~振動数~2~Hz~の，(B)には振幅~7~mm~振動数~2~Hz~の正弦波入力を与えた結果を示す．
+\par
+解析モデルの計算結果と計測結果の違いはモデル化誤差による影響である．振動数~2~Hz~では解析モデルの計算結果にレーザ変位計の計測結果がよく対応している結果が得られた．
+振動数が高くなるにつれて解析モデルの計算結果とハードウェアの挙動が乖離する結果となった．これは，ハードウェアの逆モデルで線形パラメータを用いるためであると考えられる．
+% \vspace{3mm}
+% % \vspace{1mm}
+% \begin{figure}[h]
+%   \centering
+%    \includegraphics[height=30mm]{figure/step_2.eps}
+%   \vspace{-2mm}
+% \caption{Input (Step 2mm)}
+%   \label{fig:step}
+% \end{figure}
+
+% % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+% % Step
+% %  ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+\vspace{-1mm}
+\begin{figure}[h]
+    \begin{tabular}{cc}
+      \begin{minipage}{0.5\hsize}
+	\centering
+	  \includegraphics[height=30mm]{figure/hils_sine_2_7.eps}
+	  \begin{center}
+	  \vspace{-4mm}
+	  \ (A) Sine 2~Hz~7~mm\
+	  \end{center}
+	\end{minipage}
+       \begin{minipage}{0.5\hsize}
+	\centering
+	  \includegraphics[height=30mm]{figure/hils_sine_5_2.eps}
+	  \begin{center}
+	  \vspace{-4mm}
+	  \ (B) Sine 5~Hz~2~mm\
+	  \end{center}
+      \end{minipage}
+    \end{tabular}
+    \vspace{-1mm}
+    \caption{Suspension stroke}
+    \label{fig:hils_step}
+\end{figure}
+　
+\vspace{-6mm}
+\par
+次に，HILSシステムを用いてモデル化誤差の影響を評価した．
+解析モデルに意図的にモデル化誤差を与え，サスペンションストロークの解析モデルと計測結果を比較した．図~\ref{fig:bane}~に解析モデルのばね定数$k_2$を~405~N/m~から~300~N/m~と~500~N/m~に変更した場合の解析結果を示す．
+% \noindent
+このとき，ばね定数が小さくなると解析モデルの計算結果に比べて計測結果の振幅が小さくなり，ばね定数が大きくなると解析モデルの計算結果に比べて振幅が大きくなる傾向が見られた．このことから，モデル化誤差により解析モデルとハードウェアの挙動に差異が生じることがわかる．
+\vspace{-1mm}
+\begin{figure}[h]
+    \begin{tabular}{c}
+      \begin{minipage}{0.5\hsize}
+	\begin{center}
+	  \includegraphics[height=30mm]{figure/2_5_300.eps}
+	\end{center}
+	\begin{center}
+	  \vspace{-2mm}
+	  \ (A) $k_2$ = 300~[N/m]\
+	  \end{center}
+      \end{minipage}
+      \begin{minipage}{0.5\hsize}
+	\begin{center}
+	  \includegraphics[height=30mm]{figure/2_5_500.eps}
+	  \end{center}
+	  \begin{center}
+	  \vspace{-2mm}
+	  \ (B)  $k_2$ = 500~[N/m]\
+	  \end{center}
+      \end{minipage}
+    \end{tabular}
+    \vspace{-1mm}
+    \caption{Suspension stroke}
+    \label{fig:bane}
+\end{figure}
+
+
+\par
+次に，解析モデルにモデル化誤差としてハードウェアの摩擦を考慮した場合の解析結果を示す．
+式~(\ref{eq:friction})~で示す摩擦力を解析モデルのばね上ばね下間に考慮し評価を行った．$F~$は最大摩擦力，$\dot{x}_2$はばね上速度，$\dot{x}_1$はばね下速度である．
+% \vspace*{-1mm}
+\begin{flalign}
+\label{eq:friction}
+\ & f=Ftanh(\dot{x}_2-\dot{x}_1)
+\end{flalign}
+
+\par
+振幅~7~mm~振動数~2~Hz~の正弦波入力を与え，最大摩擦力を変化させた場合のサスペンションストロークを比較する．図~\ref{fig:masatsu}~の(A)には最大摩擦力が~2~N~のサスペンションストロークの結果を，(B)には~4~N~の結果を示す．それぞれ解析モデルの計算結果とレーザ変位計による計測結果を示す．
+\par
+最大~2~N~の摩擦を付与した場合は，解析モデルの計算結果とレーザ変位計の計測結果が近づいた．しかし，最大~4~N~の摩擦を付与した場合には振幅に変化が見られ，システム自体の挙動が変化したことがわかる．
+このことからモデル化誤差の影響により，システム自体の挙動が変化し，解析モデルの計算結果とハードウェアの挙動の関係にも変化が生じることがわかる．
+
+% % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+% % force
+% %  ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+\vspace{1mm}
+\begin{figure}[h]
+%     \begin{tabular}{c}
+%       \begin{minipage}{0.5\hsize}
+% 	\begin{center}
+% 	  \includegraphics[height=30mm]{figure/friction_model.eps}
+% 	  \end{center}
+% 	  \begin{center}
+% 	  \vspace{-4mm}
+% 	  \end{center}
+%       \end{minipage}
+%       
+%       \begin{minipage}{0.5\hsize}
+	\begin{center}
+	  \includegraphics[height=30mm]{figure/friction.eps}
+	  \end{center}
+% 	  \begin{center}
+% 	  \vspace{-4mm}
+% 	  \end{center}
+%       \end{minipage}
+%     \end{tabular}
+    \vspace{-1mm}
+    \caption{Friction force}
+    \label{fig:force}
+\end{figure}
+
+% \vspace*{-6mm}
+% \begin{flalign}
+% \label{eq:Friction}
+% \& f = F \time tanh (\dot{x)_2-\dot{x}_1)
+% \end{flalign}
+
+　
+% % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+% % Masatsu
+% %  ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+\vspace{-2mm}
+\begin{figure}[h]
+%     \begin{tabular}{c}
+%       \begin{minipage}{0.5\hsize}
+% 	\begin{center}
+% 	  \includegraphics[height=30mm]{figure/2_7_input.eps}
+% 	\end{center}
+% 	\begin{center}
+% 	  \vspace{-2mm}
+% 	  \ (A) Sine (2Hz 7mm)\
+% 	  \end{center}
+%       \end{minipage}
+%       \begin{minipage}{0.5\hsize}
+% 	\begin{center}
+% 	  \includegraphics[height=30mm]{figure/2_7_tanh.eps}
+% 	  \end{center}
+% 	  \begin{center}
+% 	  \vspace{-2mm}
+% 	  \ (B) w/o Friction \
+% 	  \end{center}
+%       \end{minipage}
+%     \end{tabular}\\
+    \begin{tabular}{c}
+      \begin{minipage}{0.5\hsize}
+	\begin{center}
+	  \includegraphics[clip,height=30mm]{figure/2_7_tanh2.eps}
+	\end{center}
+	\begin{center}
+	  \vspace{-2mm}
+	  \ (A) with Friction(F=2)\
+	  \end{center}
+      \end{minipage}
+      \begin{minipage}{0.5\hsize}
+	\begin{center}
+	  \includegraphics[clip,height=30mm]{figure/2_7_tanh4.eps}
+	  \end{center}
+	  \begin{center}
+	  \vspace{-2mm}
+	  \ (B) with Friction(F=4) \
+	  \end{center}
+      \end{minipage}
+    \end{tabular}
+    \vspace{-1mm}
+    \caption{Suspension stroke}
+    \label{fig:masatsu}
+\end{figure}
+
+
+
+
+% 次に解析モデルのタイヤの縦ばね剛性を変更し，図~\ref{fig:step}~に示すステップ入力によるサスペンションストロークの結果を図~\ref{fig:spring}~に示す．タイヤの縦ばね剛性を小さくすると，サスペンションストロークの結果は振動的になり計算結果と計測結果が乖離する結果となった．
+% 
+% % % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+% % % Spring
+% % %  ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+% \vspace{2mm}
+% \begin{figure}[h]
+%     \begin{tabular}{cc}
+%       \begin{minipage}{0.5\hsize}
+% 	\begin{center}
+% 	  \includegraphics[height=30mm]{figure/hils_step.eps}
+% 	\end{center}
+% 	\begin{center}
+% 	  \vspace{-2mm}
+% 	  \ (A)　$k_1=2200$　
+% 	  \end{center}
+%       \end{minipage}
+%       
+%       \begin{minipage}{0.5\hsize}
+% 	\begin{center}
+% 	  \includegraphics[height=30mm]{figure/hils_step_1000.eps}
+% 	\end{center}
+% 	\begin{center}
+% 	  \vspace{-2mm}
+% 	  \ (B)　$k_1=1000$　
+% 	  \end{center}
+%       \end{minipage}
+%     \end{tabular}
+%     \vspace{-2mm}
+%     \caption{Step (2mm)}
+%     \label{fig:spring}
+% \end{figure}
+
+　
+\section{結言}
+本研究ではモデル化誤差の影響を評価するために，新たにHILSシステムを開発した．
+計測したダンパ力をフィードバックし，HILS試験機でサスペンションストロークを実現するHILSシステムを開発した．
+そして，HILSシステムにおけるモデル化誤差の影響を評価した．解析モデルにモデル化誤差を与え，サスペンションストロークの結果を比較した．このことから，HILSシステムにおいてモデル化誤差がシステムの解析結果に影響を及ぼすことを確認した．
+
+\vspace{2mm}
+\begin{thebibliography}{9}
+\bibitem{1}石塚弘道，佐々木君章，鉄道車両用HILSシステムによる仮想走行試験環境，日本機械学会第16回交通・物流部門，大会講演論文集No. 07-51(2007)，pp. 37-42
+\bibitem{2}社団法人\ 自動車技術会，自動車技術ハンドブック5設計(シャシ)編，社団法人\ 自動車技術会，(1990)，p. 25
+\end{thebibliography}
+
+\end{document}

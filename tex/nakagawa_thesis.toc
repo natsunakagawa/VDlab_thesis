@@ -16,5 +16,9 @@
 \contentsline {section}{\numberline {3.}アクチュエータの制御手法}{14}{section.3}%
 \contentsline {subsection}{\numberline {3.1}相対変位を用いた制御手法}{14}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}IDCSを用いた制御手法}{15}{subsection.3.2}%
-\contentsline {section}{\numberline {4.}制御手法によるHILSシステムの評価}{18}{section.4}%
-\contentsline {subsection}{\numberline {4.1}シミュレーションによる評価}{18}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {3.2.1}IDCS制御手法}{15}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}非線形ダンパモデル}{18}{subsubsection.3.2.2}%
+\contentsline {section}{\numberline {4.}制御手法によるHILSシステムの評価}{20}{section.4}%
+\contentsline {subsection}{\numberline {4.1}シミュレーションによる評価}{20}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}HILS試験}{23}{subsection.4.2}%
+\contentsline {section}{\numberline {5.}結論}{24}{section.5}%
