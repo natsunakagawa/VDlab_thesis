@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.3-191112-2.6 (utf8.sjis) (TeX Live 2020/W32TeX) (preloaded format=platex 2020.12.14)  18 JAN 2021 01:45
+This is e-pTeX, Version 3.14159265-p3.8.3-191112-2.6 (utf8.sjis) (TeX Live 2020/W32TeX) (preloaded format=platex 2020.12.14)  20 JAN 2021 00:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -428,11 +428,8 @@ File: figure/HILS_loop.eps Graphic file (type eps)
  <figure/HILS_loop.eps>
 File: figure/analysis_model.eps Graphic file (type eps)
  <figure/analysis_model.eps>
-
-LaTeX Warning: Reference `eq:testing_machine' on page 1 undefined on input line 110.
-
 File: figure/HILS_machine.eps Graphic file (type eps)
-<figure/HILS_machine.eps>
+ <figure/HILS_machine.eps>
 Overfull \hbox (11.4133pt too wide) in paragraph at lines 115--117
  [][] 
  []
@@ -442,23 +439,44 @@ Overfull \hbox (11.4133pt too wide) in paragraph at lines 115--117
 
 ]
 File: figure/idcs_block.eps Graphic file (type eps)
- <figure/idcs_block.eps> [2
+ <figure/idcs_block.eps>
+File: figure/idcs_diagram.eps Graphic file (type eps)
+ <figure/idcs_diagram.eps>
+File: figure/damper_fx.eps Graphic file (type eps)
+ <figure/damper_fx.eps>
+File: figure/damper_fv.eps Graphic file (type eps)
+ <figure/damper_fv.eps>
+Overfull \hbox (14.5pt too wide) in paragraph at lines 152--172
+[][]
+ []
 
-] (./abstract_nakagawa.aux)
+File: figure/sus_linear_5_3.eps Graphic file (type eps)
+<figure/sus_linear_5_3.eps>
+File: figure/idcs_linear_5_3.eps Graphic file (type eps)
+ <figure/idcs_linear_5_3.eps>
+Overfull \hbox (14.5pt too wide) in paragraph at lines 187--207
+[][]
+ []
+
+File: figure/sus_nonlinear_5_3.eps Graphic file (type eps)
+<figure/sus_nonlinear_5_3.eps>
+File: figure/idcs_nonlinear_5_3.eps Graphic file (type eps)
+ <figure/idcs_nonlinear_5_3.eps>
+Overfull \hbox (14.5pt too wide) in paragraph at lines 219--239
+[][]
+ []
+
+[2] (./abstract_nakagawa.aux)
 Package rerunfilecheck Info: File `abstract_nakagawa.out' has not changed.
-(rerunfilecheck)             Checksum: C2F50432C770B04402ABCBBCF1EBACFD;384.
-
-
-LaTeX Warning: There were undefined references.
-
+(rerunfilecheck)             Checksum: 70F32B116F7EAE7496127FF2BF334CEC;487.
  ) 
 Here is how much of TeX's memory you used:
- 7245 strings out of 479854
- 104858 string characters out of 5884980
- 429705 words of memory out of 5000000
- 24354 multiletter control sequences out of 15000+600000
+ 7278 strings out of 479854
+ 105662 string characters out of 5884980
+ 433066 words of memory out of 5000000
+ 24380 multiletter control sequences out of 15000+600000
  432010 words of font info for 102 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 86i,11n,90p,700b,427s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 86i,11n,90p,700b,500s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on abstract_nakagawa.dvi (2 pages, 19004 bytes).
+Output written on abstract_nakagawa.dvi (2 pages, 27944 bytes).

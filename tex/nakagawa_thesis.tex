@@ -232,9 +232,51 @@
   \end{center}
 \end{figure}
 
+\newpage
+本研究では，シリアル通信を用いて位置制御を行った．それにあたり，RS232ケーブルを用いてPC-PC間でシリアル通信を用いて値を送り，モータドライバの使用方法を確認した．シリアル通信で使用したsimulinkモデルを図~\ref{}に示す．通信周期は2msで行った．シリアル通信を行う際，表~\ref{tab:serial}~に示すような設定が必要であり，Simulinkの「Serial Configration」ブロックを用いて設定した．図~\ref{fig:serial_send}~にある「MATLAB Function」ブロックは付録に示す．これは，ETH Zurich(スイス連邦工科大学チューリッヒ校)のAutonomous Systems Laboratoryが公開しているGitHub(ethz-asl/matlab-epos-librery)を参考にした．\cite{eth_zurich}
+
+\vspace*{10mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=60mm]{figure/serial_send.eps}
+    \vspace*{3mm}
+    \caption{Serial Send}
+    \label{fig:serial_send}
+  \end{center}
+\end{figure}
+
+\begin{table}[htp]
+  \begin{center}
+    \makeatletter
+    \def\@captype{table}
+    \makeatother
+    \caption{Specification of Serial Communication(RS232)}
+      \label{tab:serial}
+	\begin{tabular}{cc}\hline
+	  Parameter & Value\\\hline
+	  Baud Rate & 115200 [bps]\\
+	  Start Bits & 1\\
+	  Data Bits & 8\\
+	  Parity & none\\
+	  Stop Bits & 1\\
+	  Byte Order & Little Endian\\
+	  Terminator & $\backslash$n\\\hline
+      \end{tabular}
+    \end{center}
+\end{table}
 
 \newpage
-本研究では，シリアル通信を用いた位置制御を行った．
+このモータドライバと路面部モータであるECブラシレスモータ「EC22 386658」を用いて位置制御の確認を行った．モータドライバ「EPOS2 70/10 375711」はmaxon motor社製のグラフィカル・ユーザ・インターフェース「EPOS Studio」を用いて，モータやエンコーダなどにモータドライバが適合するようにシステム設定を行うことができる\cite{epos_studio}．また，制御ゲインのオート・チューニング機能を用いて，電流，速度，位置の制御ゲインを自動的に調整している．図~\ref{fig:serial_send}~の送信先をモーダドライバに設定した。オシロスコープを使って通信が正常に行われていることと，モータが動作することを確認した．なお，オシロスコープでは通信周期の2msごとに0Vと1Vに切り替わる矩形波を見ることができる．図~\ref{fig:epos_studio}~に「EPOS Studio」の画面を示す．
+
+\vspace*{10mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=80mm]{figure/epos_studio.eps}
+    \vspace*{3mm}
+    \caption{EPOS Studio}
+    \label{fig:epos_studio}
+  \end{center}
+\end{figure}
 
 \newpage
 \subsubsection{スライダクランク機構}
@@ -254,15 +296,15 @@ x_{0} =r\times \sin \theta _{A} +\sqrt{l^{2} -r^{2}\cos^{2} \theta _{A}} -\sqrt{
     \label{fig:slider_crank}
   \end{center}
 \end{figure}
-% \vspace*{5mm}
-% \begin{figure}[htp]
-%   \begin{center}
-%     \includegraphics[height=30mm]{figure/Lookuptable.eps}
-%     \vspace*{3mm}
-%     \caption{Loou up table}
-%     \label{fig:Look}
-%   \end{center}
-% \end{figure}
+\vspace*{5mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=30mm]{figure/Lookuptable.eps}
+    \vspace*{3mm}
+    \caption{Loou up table}
+    \label{fig:Look}
+  \end{center}
+\end{figure}
 
 \newpage
 \subsubsection{計測機器}
@@ -554,7 +596,8 @@ Real-Time Interfaceは，dSPACE社製のハードウェアとMathWorks社製の�
 \end{figure}
 \newpage
 
-IDCS制御系を組み込んだHILSシステムのブロック線図を図~\ref{fig:idcs_diagram}~に示す．
+IDCS制御系を組み込んだHILSシステムのブロック線図を図~\ref{fig:idcs_diagram}~に示す．ハードウェアモデルは試験機を模擬したモデルであり，ハードウェアモデルのサスペンションストローク$-\bar{x_1}$が目標値と一致するようにフィードバック制御系を作成する．本研究で用いるIDCS制御系内の制御器$K$は，目標値とハードウェアモデルのサスペンションストローク$-\bar{x_1}$の偏差を取り，比例ゲイン$K_p$を用いてアクチュエータへの入力値を決定している．
+
 
 \vspace*{7mm}
 \begin{figure}[htp]
@@ -568,7 +611,7 @@ IDCS制御系を組み込んだHILSシステムのブロック線図を図~\ref{
 \newpage
 
 \subsubsection{非線形ダンパモデル}
-~\ref{sec:sub_method_idcs}章で述べた通り，IDCS制御手法において制御精度を高めるには，制御対象と制御対象モデルとのモデル化誤差を小さくする必要がある．そこで本研究で使用するダンパの単体試験を行い，試験データより作成した非線形性を考慮したダンパモデルを制御対象のモデルに組み込む．．
+~\ref{sec:sub_method_idcs}章で述べた通り，IDCS制御手法において制御精度を高めるには，制御対象と制御対象モデルとのモデル化誤差を小さくする必要がある．そこで本研究で使用するダンパの単体試験を行い，試験データより作成した非線形性を考慮したダンパモデルを制御対象のモデルに組み込む．
 
 シリンダ内の空気の密度と圧力をそれぞれ$\rho$，$P$，初期状態では，大気の密度$\rho_0$，大気圧$P_0$に等しいと仮定する．ダンパ力はシリンダ内の圧力変化$\Delta P = P-P_0$とダンパのピストン面積$S$より，式(~\ref{eq:delta_P})で表せる．
 
@@ -755,7 +798,34 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
 \end{figure}
 
 \newpage
-非線形ダンパモデルを組み込んだIDCS制御手法による制御手法のシミュレーション結果を図~\ref{}に示す．
+続いて非線形ダンパモデルを組み込んだIDCS制御手法による制御手法のシミュレーション結果を示す．図~\ref{fig:sim_idcs_5_1_nonlinear}が周波数1Hz，振幅5mm，図~\ref{fig:sim_idcs_3_3_nonlinear}が周波数3Hz，振幅3mm，図~\ref{fig:sim_idcs_2_5_nonlinear}が周波数5Hz，振幅2mmの結果である．
+
+\vspace{5mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=45mm]{figure/sim_idcs_5_1_nonlinear.eps}
+    \caption{IDCS method with nonlinear damper model(Input:1Hz 5mm)}
+    \label{fig:sim_idcs_5_1_nonlinear}
+  \end{center}
+\end{figure}
+
+\vspace{2mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=45mm]{figure/sim_idcs_3_3_nonlinear.eps}
+    \caption{IDCS method with nonlinear damper model(Input:3Hz 3mm)}
+    \label{fig:sim_idcs_3_3_nonlinear}
+  \end{center}
+\end{figure}
+
+\vspace{2mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=45mm]{figure/sim_idcs_2_5_nonlinear.eps}
+    \caption{IDCS method with nonlinear damper model(Input:5Hz 2mm)}
+    \label{fig:sim_idcs_2_5_nonlinear}
+  \end{center}
+\end{figure}
 
 \newpage
 \subsection{HILS試験}
@@ -766,7 +836,7 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
   \begin{tabular}{cc}
   \begin{minipage}{0.5\hsize}
   \begin{center}
-    \includegraphics[height=40mm]{figure/hils_rela_5_1.eps}
+    \includegraphics[height=45mm]{figure/hils_rela_5_1.eps}
     \end{center}
     \begin{center}
     \ (a)Relative\
@@ -774,13 +844,19 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
   \end{minipage}
   \begin{minipage}{0.5\hsize}
      \begin{center}
-      \includegraphics[height=40mm]{figure/hils_idcs_5_1.eps}
+      \includegraphics[height=45mm]{figure/hils_idcs_5_1.eps}
       \end{center}
       \begin{center}
       \ (b)IDCS\
     \end{center}
   \end{minipage}
   \end{tabular}
+  \begin{center}
+    \includegraphics[height=45mm]{figure/sim_idcs_5_1_nonlinear.eps}
+  \end{center}
+  \begin{center}
+    \ (c)Compare Suspension Stroke with IDCS\
+  \end{center}
   \vspace*{2mm}
   \caption{Comparison of Suspension Stroke(Input:1Hz 5mm)}
     \label{fig:hils_5_1}
@@ -812,9 +888,8 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
 \newpage
 \section{結論}
 
-
-
-% ----------シミュレーション結果を載せるよ~ ---------------------
+\newpage
+\section*{謝辞}
 
 
 \newpage
@@ -825,6 +900,8 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
 \bibitem{exp_hils1}永井正夫，吉田秀久，Noomwongs Nuksit，横井隆，川眞田智，小林克宏，タイヤHIL シミュレータによる車両運動性能の研究(第1報) : タイヤHIL シミュレータの開発，自動車技術会論文集，Vol35，No.2，(2004)，pp.147-152
 \bibitem{exp_hils2}山口輝也, 実ヨーダンパを用いたHardware-In-the-Loopシミュレーションによる鉄道車両の蛇行動安定性試験(試験環境の構築と安定的な検証), 日本機械学会論文集,C編Vol.79 No.806(2013-10),pp.131-142
 \bibitem{toyota_hils}https://www.toyota.co.jp/jpn/company/history/75years/data/automotive\_business/ \\ products\_technology/technology\_development/performance/images/supplement\_img01.jpg
+\bibitem{eth_zurich}http://github.com/ethz-asl/matlab\_epos\_library
+\bibitem{epos_studio}http://academy.maxonjapan.co.jp/mmc
 \bibitem{dspace}http://www.dspace.com/ja/jpn/home.cfm
 \bibitem{carbody_model}社団法人\ 自動車技術会，自動車技術ハンドブック5設計(シャシ)編，社団法人\ 自動車技術会，(1990)，p. 25
 \bibitem{method_idcs}青木 健悟，IDCSを用いた柔軟アームを有するロボットの振動制御，日本ロボット学会誌，Vol.31，No.10，(2010)，pp.1001-1008
