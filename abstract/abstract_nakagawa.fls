@@ -723,6 +723,10 @@ INPUT ./figure/HILS_loop.eps
 INPUT ./figure/HILS_loop.eps
 INPUT figure/HILS_loop.eps
 INPUT figure/HILS_loop.eps
+INPUT ./figure/HILS_machine.eps
+INPUT ./figure/HILS_machine.eps
+INPUT figure/HILS_machine.eps
+INPUT figure/HILS_machine.eps
 INPUT ./figure/analysis_model.eps
 INPUT ./figure/analysis_model.eps
 INPUT figure/analysis_model.eps
@@ -740,10 +744,6 @@ INPUT c:/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmmib10.tfm
 INPUT c:/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib7.tfm
 INPUT c:/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmbsy10.tfm
 INPUT c:/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm
-INPUT ./figure/HILS_machine.eps
-INPUT ./figure/HILS_machine.eps
-INPUT figure/HILS_machine.eps
-INPUT figure/HILS_machine.eps
 OUTPUT abstract_nakagawa.dvi
 INPUT ./figure/idcs_block.eps
 INPUT ./figure/idcs_block.eps

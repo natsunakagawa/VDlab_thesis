@@ -52,6 +52,30 @@
     \end{tabular}
 \end{figure}
 
+\newpage
+\subsection{ダンパ}
+ダンパは車体の上下運動エネルギーを吸収することによって自動車の振動を抑制し，車両の運動性能向上を図るものである．この制動力を通常，減衰力と呼ぶ\cite{chassis_handbook}．また，凹凸のある路面を走行時に，車体のピッチ，ロール方向の振動を減衰して乗り心地を向上させるとともに，タイヤの接地性を高め尻振りを防ぐための安定性や乗り心地に大きく影響を与える\cite{daisyarin}．一般的な自動車ではオイルの粘性抵抗を利用したオイルダンパが多く利用されている．
+
+\begin{description}
+ \item[エアダンパ]\mbox{}\\
+ 空気を用いて減衰力を発生させるダンパである．オイルダンパと比較すると，粘度の温度変化が極めて少ない，経年劣化がなく保守が容易であるなどの優れた点がある.
+ また，ピストンがシリンダ内部においてエアーフィルム上に浮いている状態のため，摩擦係数や始動摩擦が極めて小さいといった特徴がある．
+ エアダンパにはダンパとしての減衰要素を含むだけでなく，空気ばねとしての剛性要素を含むため，非線形な特性を有していることが分かっている\cite{thesis_airpot}．
+\end{description}
+
+\vspace{10mm}
+ \begin{figure}[h!]
+   \begin{tabular}{cc}
+     \begin{minipage}{1.0\hsize}
+       \begin{center}
+ 	\includegraphics[scale = 0.8]{figure/airpot_1.eps}
+ 	\caption{Air damper\cite{picture_airpot}}
+ 	\label{fig:suspension}
+       \end{center}
+      \end{minipage}
+     \end{tabular}
+ \end{figure}
+
 % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 \newpage
 \subsection{Hardware-in-the-Loop Simulation(HILS)システム}
@@ -66,7 +90,7 @@
   \begin{tabular}{cc}
     \begin{minipage}{1.0\hsize}
       \begin{center}
-	\includegraphics[scale = 0.4]{figure/hils.eps}
+	\includegraphics[scale = 0.45]{figure/hils.eps}
 	\caption{HILS System\cite{toyota_hils}}
 	\label{fig:HILS system}
       \end{center}
@@ -75,10 +99,11 @@
 \end{figure}
 
 % ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+\newpage
 \subsection{研究目的}
-前述のように，HILSシステムは試験機の計測結果を用いた解析を行い，その解析結果に基づいて試験機のアクチュエータの入力を決定し特性評価を行うシステムである．HILSシステムはシミュレーション解析と実機試験の同期が必要であるため，高い制御精度が求められる．
+前述のように，HILSシステムは試験機の計測結果を用いた解析を行い，その解析結果に基づいて試験機のアクチュエータの入力を決定し特性評価を行うシステムである．HILSシステムはシミュレーション解析と実機試験の同期が必要であるため，高い制御精度が求められる．また自動車のサスペンション部には非線形な特性を有しているダンパがある．HILSシステムの制御精度を高めるためには，非線形特性を考慮した制御が必要となる．
 
-そこで本研究では，HILSシステムの再現性の向上を目的として，Inverse Dynamics Compensation via 'Simulation of feedback control systems'(IDCS)制御手法を用いHILSシステムの制御精度の向上を行った．研究室で開発したHILS試験機を用いて，試験機の挙動と解析結果を比較することで，IDCSの有効性を検証した．また路面-車体間の相対変位を用いる制御手法による解析結果と，IDCSによる解析結果を比較し，IDCSによるHILSシステムの制御精度の優位性を検証した．
+そこで本研究では，HILSシステムの再現性の向上を目的として，Inverse Dynamics Compensation via 'Simulation of feedback control systems'(IDCS)制御手法を用いHILSシステムの制御精度の向上を行った．研究室で開発したHILS試験機を用いて，試験機の挙動と解析結果を比較することで，IDCSの有効性を検証した．また路面-車体間の相対変位を用いる制御手法による解析結果と，IDCSによる解析結果を比較し，IDCSによるHILSシステムの優位性を確認した
 
 % -------------------------------------
 \newpage
@@ -104,7 +129,6 @@
 本研究で用いるHILS試験機を図~\ref{fig:HILS_machine}~に示す．この装置は上下1自由度で，自動車の車体をばね上で，タイヤ-サスペンション系をばね下とばね・ダンパで表現している．また路面部にはアクチュエータを取り付けている．
 
 ソフトウェア部で行う解析によって得たサスペンションストロークをばね上ばね下間の変位として実現している．またレーザ変位計とロードセルを用いて，サスペンションストロークとダンパ力を計測しており，ダンパ力はソフトウェア部の解析に用いられる．
-
 
 % HILS_machine ---------------------------
 \vspace{10mm}
@@ -233,7 +257,7 @@
 \end{figure}
 
 \newpage
-本研究では，シリアル通信を用いて位置制御を行った．それにあたり，RS232ケーブルを用いてPC-PC間でシリアル通信を用いて値を送り，モータドライバの使用方法を確認した．シリアル通信で使用したsimulinkモデルを図~\ref{}に示す．通信周期は2msで行った．シリアル通信を行う際，表~\ref{tab:serial}~に示すような設定が必要であり，Simulinkの「Serial Configration」ブロックを用いて設定した．図~\ref{fig:serial_send}~にある「MATLAB Function」ブロックは付録に示す．これは，ETH Zurich(スイス連邦工科大学チューリッヒ校)のAutonomous Systems Laboratoryが公開しているGitHub(ethz-asl/matlab-epos-librery)を参考にした．\cite{eth_zurich}
+本研究では，シリアル通信を用いて位置制御を行った．それにあたり，RS232ケーブルを用いてPC-PC間でシリアル通信を用いて値を送り，モータドライバの使用方法を確認した．シリアル通信で使用したsimulinkモデルを図~\ref{fig:serial_send}に示す．通信周期は2msで行った．シリアル通信を行う際，表~\ref{tab:serial}~に示すような設定が必要であり，Simulinkの「Serial Configration」ブロックを用いて設定した．図~\ref{fig:serial_send}~にある「MATLAB Function」ブロックは付録に示す．これは，ETH Zurich(スイス連邦工科大学チューリッヒ校)のAutonomous Systems Laboratoryが公開しているGitHub(ethz-asl/matlab-epos-librery)を参考にした．\cite{eth_zurich}
 
 \vspace*{10mm}
 \begin{figure}[htp]
@@ -550,8 +574,7 @@ Real-Time Interfaceは，dSPACE社製のハードウェアとMathWorks社製の�
 \end{figure}
 
 \newpage
-
-図~\ref{fig:idcs_block}~の点線で囲まれた部分は制御対象の逆動力学$P^{-1}$に対応している．図~\ref{fig:bode_inv_idcs}~に本研究の制御対象であるHILS試験機の逆伝達関数とIDCSの点線部の伝達関数のボード線図を示す．式(~\ref{eq:1dof}~)にIDCS制御系内の試験機を模擬したモデルの運動方程式，図~\ref{fig:hardware_model}~にHILS試験機のモデル図，表~\ref{tab:parameter_1dof}~にHILS試験機の諸元を示す，ボード線図から，IDCS制御系の制御器$K$の比例ゲインを大きくすることで，IDCS制御系の伝達関数はシステムの逆伝達関数に近づくことがわかる．
+IDCS制御系を組み込んだHILSシステムのブロック線図を図~\ref{fig:idcs_diagram}~に示す．式(~\ref{eq:1dof}~)はIDCS制御系内の試験機を模擬したモデルの運動方程式であり，，図~\ref{fig:hardware_model}~にHILS試験機のモデル図，表~\ref{tab:parameter_1dof}~にHILS試験機の諸元を示す，
 
 \begin{equation}
   m_1\ddot{\bar{x}}_1+c_2\dot{\bar{x}}_1+k_1(\bar{x}_1-\bar{x}_0)+k_2\bar{x}_1=0 \label{eq:1dof}
@@ -559,15 +582,18 @@ Real-Time Interfaceは，dSPACE社製のハードウェアとMathWorks社製の�
 
 ここで，$m_1$はタイヤ質量 ,$k_1$はタイヤの縦ばね剛性，$k_2$はばね定数，$c_2$は減衰係数，$\bar{x}_0$はHILS試験機の路面部変位，$\bar{x}_1$はタイヤ変位である．
 
-\vspace{7mm}
+ハードウェアモデルは試験機を模擬したモデルであり，ハードウェアモデルのサスペンションストローク$-\bar{x_1}$が目標値と一致するようにフィードバック制御系を作成する．本研究で用いるIDCS制御系内の制御器$K$は，目標値とハードウェアモデルのサスペンションストローク$-\bar{x_1}$の偏差を取り，比例ゲイン$K_p$を用いてアクチュエータへの入力値を決定している．
+
+\vspace*{7mm}
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[height=65mm]{figure/bode_inverse.eps}
-    \caption{Comparison of inverse transfer function and IDCS}
-    \label{fig:bode_inv_idcs}
+    \includegraphics[height=95mm]{figure/idcs_diagram.eps}
+    \vspace*{3mm}
+    \caption{Block diagram of HILS system(IDCS)}
+    \label{fig:idcs_diagram}
   \end{center}
 \end{figure}
-\vspace{7mm}
+\vspace{5mm}
 \begin{figure}[h]
   \begin{minipage}{0.4\hsize}
      \begin{center}
@@ -594,22 +620,44 @@ Real-Time Interfaceは，dSPACE社製のハードウェアとMathWorks社製の�
    \end{center}
  \end{minipage}
 \end{figure}
+
 \newpage
+図~\ref{fig:idcs_diagram}~の実線で囲まれた部分は制御対象の逆動力学$P^{-1}$に対応している．図~\ref{fig:bode_inv_idcs}~に本研究の制御対象であるHILS試験機の逆伝達関数と図~\ref{fig:idcs_diagram}の実践部の伝達関数のボード線図を示す．ボード線図から，IDCS制御系の制御器$K$の比例ゲイン$K_p$を大きくすることで，IDCS制御系の伝達関数はシステムの逆伝達関数に近づくことがわかる．
 
-IDCS制御系を組み込んだHILSシステムのブロック線図を図~\ref{fig:idcs_diagram}~に示す．ハードウェアモデルは試験機を模擬したモデルであり，ハードウェアモデルのサスペンションストローク$-\bar{x_1}$が目標値と一致するようにフィードバック制御系を作成する．本研究で用いるIDCS制御系内の制御器$K$は，目標値とハードウェアモデルのサスペンションストローク$-\bar{x_1}$の偏差を取り，比例ゲイン$K_p$を用いてアクチュエータへの入力値を決定している．
-
-
-\vspace*{7mm}
-\begin{figure}[htp]
+\vspace*{5mm}
+\begin{figure}[h]
+  \begin{tabular}{ccc}
+  \begin{minipage}{0.33\hsize}
   \begin{center}
-    \includegraphics[height=90mm]{figure/idcs_diagram.eps}
-    \vspace*{3mm}
-    \caption{Block diagram of HILS system(IDCS)}
-    \label{fig:idcs_diagram}
-  \end{center}
+    \includegraphics[height=55mm]{figure/bode_inverse_Kp10.eps}
+    \end{center}
+    \begin{center}
+    \ $K_p=10$\
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.33\hsize}
+  \begin{center}
+    \includegraphics[height=55mm]{figure/bode_inverse_Kp50.eps}
+    \end{center}
+    \begin{center}
+    \ $K_p=50$\
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.33\hsize}
+  \begin{center}
+    \includegraphics[height=55mm]{figure/bode_inverse_Kp100.eps}
+    \end{center}
+    \begin{center}
+    \ $K_p=100$\
+    \end{center}
+  \end{minipage}
+  \end{tabular}
+  \vspace*{3mm}
+  \caption{Comparison of Inverse transferfcn with IDCS}
+    \label{fig:bode_inv_idcs}
 \end{figure}
-\newpage
 
+\newpage
 \subsubsection{非線形ダンパモデル}
 ~\ref{sec:sub_method_idcs}章で述べた通り，IDCS制御手法において制御精度を高めるには，制御対象と制御対象モデルとのモデル化誤差を小さくする必要がある．そこで本研究で使用するダンパの単体試験を行い，試験データより作成した非線形性を考慮したダンパモデルを制御対象のモデルに組み込む．
 
@@ -645,14 +693,14 @@ $\Delta P$は，式\ref{eq:q_m}の数値解を用いた．
 式(~\ref{eq:q_m})の流量係数$C_{or}$は実験的に求めるものである．
 
 \newpage
-作成した非線形ダンパモデルに正弦波入力を与え，振幅を変化させた時，周波数を変化させた時のF-X線図，F-V線図を図~\ref{fig:damper_x_3}，図~\ref{fig:damper_3_x}に示す．
+作成した非線形ダンパモデルに正弦波入力を与え，振幅を変化させた時(周波数1Hz)，周波数を変化させた時(振幅3mm)のF-X線図，F-V線図を図~\ref{fig:damper_x_3}，図~\ref{fig:damper_3_x}に示す．
 
 \vspace*{5mm}
 \begin{figure}[h]
   \begin{tabular}{cc}
   \begin{minipage}{0.5\hsize}
   \begin{center}
-    \includegraphics[height=40mm]{figure/damper_x_1_Fx.eps}
+    \includegraphics[height=55mm]{figure/damper_x_1_Fx.eps}
     \end{center}
     \begin{center}
     \ F-X\
@@ -660,7 +708,7 @@ $\Delta P$は，式\ref{eq:q_m}の数値解を用いた．
   \end{minipage}
   \begin{minipage}{0.5\hsize}
      \begin{center}
-      \includegraphics[height=40mm]{figure/damper_x_1_Fv.eps}
+      \includegraphics[height=55mm]{figure/damper_x_1_Fv.eps}
       \end{center}
       \begin{center}
       \ F-V\
@@ -677,7 +725,7 @@ $\Delta P$は，式\ref{eq:q_m}の数値解を用いた．
   \begin{tabular}{cc}
   \begin{minipage}{0.5\hsize}
   \begin{center}
-    \includegraphics[height=40mm]{figure/damper_3_x_Fx.eps}
+    \includegraphics[height=55mm]{figure/damper_3_x_Fx.eps}
     \end{center}
     \begin{center}
     \ F-X\
@@ -685,7 +733,7 @@ $\Delta P$は，式\ref{eq:q_m}の数値解を用いた．
   \end{minipage}
   \begin{minipage}{0.5\hsize}
      \begin{center}
-      \includegraphics[height=40mm]{figure/damper_3_x_Fv.eps}
+      \includegraphics[height=55mm]{figure/damper_3_x_Fv.eps}
       \end{center}
       \begin{center}
       \ F-V\
@@ -699,6 +747,44 @@ $\Delta P$は，式\ref{eq:q_m}の数値解を用いた．
 \newpage
 
 \section{制御手法によるHILSシステムの評価}
+\subsection{制御手法による周波数応答特性の比較}
+前章で紹介した相対変位による制御手法と，IDCSを用いた制御手法をボード線図を用いて周波数応答特性を比較する．ボード線図で評価するシステムは，解析モデルへの路面変位をシステムの入力値とし，試験機への入力値を出力値とするようなシステムである．このシステムの概略図を図~\ref{fig:bode_diagram}に示す．本研究で用いる試験機の周波数応答を示すボード線図と，上記システムのボード線図を図~\ref{fig:bode_comparison}に示す．図~\ref{fig:bode_comparison}より試験機の共振点が7Hz付近にあることがわかる．また相対変位による制御手法を用いた試験機への入力は，試験機の共振を強めることも確認できる．
+
+\vspace{7mm}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[height=50mm]{figure/bode_diagram.eps}
+    \caption{Sytem diagram for evaluation}
+    \label{fig:bode_diagram}
+  \end{center}
+\end{figure}
+
+\vspace*{3mm}
+\begin{figure}[h]
+  \begin{tabular}{cc}
+  \begin{minipage}{0.5\hsize}
+  \begin{center}
+    \includegraphics[height=70mm]{figure/bode_hardware.eps}
+    \end{center}
+    \begin{center}
+    \ (a)Hardware\
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.5\hsize}
+     \begin{center}
+      \includegraphics[height=70mm]{figure/bode_comparison.eps}
+      \end{center}
+      \begin{center}
+      \ (b)Compare\
+    \end{center}
+  \end{minipage}
+  \end{tabular}
+  \vspace*{3mm}
+  \caption{Comparison of Relative and IDCS}
+    \label{fig:bode_comparison}
+\end{figure}
+
+\newpage
 \subsection{シミュレーションによる評価}
 HILSシステムを用いて試験をする前にハードウェア部を1自由度モデルに置き換え，シミュレーションを行った．シミュレーション時の相対変位による制御手法のブロック線図を図~\ref{fig:sim_block_relative}~に，IDCS制御手法のブロック線図を図~\ref{fig:sim_block_idcs}~に示す．解析モデルで計算したサスペンションストロークとハードウェアのモデルで計算されたサスペンションストロークを比較し，各制御手法の評価を行う．今回，HILS試験機のサスペンションストロークの範囲が25mmであるため，その範囲を超えない上でシミュレーションを行った．ハードウェアのモデルは~\ref{sec:method_idcs}~節で述べたモデルを用いる．
 
@@ -722,7 +808,7 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
 \end{figure}
 
 \newpage
-図~\ref{fig:sim_5_1}に周波数1.0Hz，振幅5mmの正弦波入力，図~\ref{fig:sim_3_3}に周波数3.0Hz，振幅3mm，図~\ref{fig:sim_5_1}に周波数5.0Hz，振幅2mmの正弦波を路面入力としたときのサスペンションストロークを，各手法ごとに比較したグラフを示す．解析モデルで計算したサスペンションストロークとハードウェアのモデルで計算した結果を示す．
+図~\ref{fig:sim_3_1}に周波数1.0Hz，振幅3mmの正弦波入力，図~\ref{fig:sim_5_3}に周波数3.0Hz，振幅5mm，図~\ref{fig:sim_5_1}に周波数5.0Hz，振幅2mmの正弦波を路面入力としたときのサスペンションストロークを，各手法ごとに比較したグラフを示す．解析モデルで計算したサスペンションストロークとハードウェアのモデルで計算した結果を示す．
 
 シミュレーション結果より，IDCSを用いた制御手法では，制御器$K$の比例ゲイン$K_p$を大きくするほど，ハードウェアのモデルの計算結果は，解析モデルで計算したサスペンションストロークに近づくことがわかる．また相対変位による制御手法は，周波数を大きくするとハードウェアの計算結果は，解析モデルで計算したサスペンションストロークから離れるが，IDCSによる制御手法では周波数を大きくしてもハードウェアの計算結果が，解析モデルのサスペンションストロークに近いことがわかる．
 
@@ -731,7 +817,7 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
   \begin{tabular}{cc}
   \begin{minipage}{0.5\hsize}
   \begin{center}
-    \includegraphics[height=35mm]{figure/sim_rela_5_1.eps}
+    \includegraphics[height=45mm]{figure/sim_rela_3_1.eps}
     \end{center}
     \begin{center}
     \ (a)Relative\
@@ -739,7 +825,7 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
   \end{minipage}
   \begin{minipage}{0.5\hsize}
      \begin{center}
-      \includegraphics[height=35mm]{figure/sim_idcs_5_1.eps}
+      \includegraphics[height=55mm]{figure/sim_linear_3_1.eps}
       \end{center}
       \begin{center}
       \ (b)IDCS\
@@ -747,14 +833,14 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
   \end{minipage}
   \end{tabular}
   \vspace*{2mm}
-  \caption{Comparison of Suspension Stroke(Input:1Hz 5mm)}
-    \label{fig:sim_5_1}
+  \caption{Comparison of Suspension Stroke(Input:1Hz 3mm)}
+    \label{fig:sim_3_1}
 \end{figure}
 \begin{figure}[h]
   \begin{tabular}{cc}
   \begin{minipage}{0.5\hsize}
   \begin{center}
-    \includegraphics[height=35mm]{figure/sim_rela_3_3.eps}
+    \includegraphics[height=55mm]{figure/sim_rela_5_3.eps}
     \end{center}
     \begin{center}
     \ (a)Relative\
@@ -762,7 +848,7 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
   \end{minipage}
   \begin{minipage}{0.5\hsize}
      \begin{center}
-      \includegraphics[height=35mm]{figure/sim_idcs_3_3.eps}
+      \includegraphics[height=55mm]{figure/sim_linear_5_3.eps}
       \end{center}
       \begin{center}
       \ (b)IDCS\
@@ -770,14 +856,16 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
   \end{minipage}
   \end{tabular}
   \vspace*{2mm}
-  \caption{Comparison of Suspension Stroke(Input:3Hz 3mm)}
-  \label{fig:sim_3_3}
+  \caption{Comparison of Suspension Stroke(Input:3Hz 5mm)}
+  \label{fig:sim_5_3}
 \end{figure}
+
+\newpage
 \begin{figure}[h]
   \begin{tabular}{cc}
   \begin{minipage}{0.5\hsize}
   \begin{center}
-    \includegraphics[height=35mm]{figure/sim_rela_2_5.eps}
+    \includegraphics[height=55mm]{figure/sim_rela_2_5.eps}
     \end{center}
     \begin{center}
     \ (a)Relative\
@@ -785,7 +873,7 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
   \end{minipage}
   \begin{minipage}{0.5\hsize}
      \begin{center}
-      \includegraphics[height=35mm]{figure/sim_idcs_2_5.eps}
+      \includegraphics[height=55mm]{figure/sim_linear_2_5.eps}
       \end{center}
       \begin{center}
       \ (b)IDCS\
@@ -798,14 +886,14 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
 \end{figure}
 
 \newpage
-続いて非線形ダンパモデルを組み込んだIDCS制御手法による制御手法のシミュレーション結果を示す．図~\ref{fig:sim_idcs_5_1_nonlinear}が周波数1Hz，振幅5mm，図~\ref{fig:sim_idcs_3_3_nonlinear}が周波数3Hz，振幅3mm，図~\ref{fig:sim_idcs_2_5_nonlinear}が周波数5Hz，振幅2mmの結果である．
+続いて非線形ダンパモデルを組み込んだIDCS制御手法による制御手法のシミュレーション結果を示す．図~\ref{fig:sim_nonlinear_3_1}が周波数1Hz，振幅5mm，図~\ref{fig:sim_nonlinear_5_3}が周波数3Hz，振幅3mm，図~\ref{fig:sim_nonlinear_2_5}が周波数5Hz，振幅2mmの結果である．
 
 \vspace{5mm}
 \begin{figure}[htp]
   \begin{center}
     \includegraphics[height=45mm]{figure/sim_idcs_5_1_nonlinear.eps}
     \caption{IDCS method with nonlinear damper model(Input:1Hz 5mm)}
-    \label{fig:sim_idcs_5_1_nonlinear}
+    \label{fig:sim_nonlinear_3_1}
   \end{center}
 \end{figure}
 
@@ -814,7 +902,7 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
   \begin{center}
     \includegraphics[height=45mm]{figure/sim_idcs_3_3_nonlinear.eps}
     \caption{IDCS method with nonlinear damper model(Input:3Hz 3mm)}
-    \label{fig:sim_idcs_3_3_nonlinear}
+    \label{fig:sim_nonlinear_5_3}
   \end{center}
 \end{figure}
 
@@ -823,80 +911,170 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
   \begin{center}
     \includegraphics[height=45mm]{figure/sim_idcs_2_5_nonlinear.eps}
     \caption{IDCS method with nonlinear damper model(Input:5Hz 2mm)}
-    \label{fig:sim_idcs_2_5_nonlinear}
+    \label{fig:sim_nonlinear_2_5}
   \end{center}
 \end{figure}
 
 \newpage
 \subsection{HILS試験}
-検討した相対変位による制御手法とIDCSを用いた制御手法におけるHILSシステムの再現性を評価するために路面入力試験を行った．図~\ref{fig:hils_5_1}に周波数1.0Hz，振幅5mm，図~\ref{fig:hils_3_3}に周波数3.0Hz, 振幅3mmの正弦波を路面に入力した時の，解析モデルと試験機のサスペンションストロークを比較したグラフを示す．
+検討した相対変位による制御手法とIDCSを用いた制御手法におけるHILSシステムの再現性を評価するために路面入力試験を行った．図~\ref{fig:hils_3_1}に周波数1.0Hz，振幅3mm，図~\ref{fig:hils_5_3}に周波数3.0Hz, 振幅5mmの正弦波を路面に入力した時の，解析モデルと試験機のサスペンションストロークを比較したグラフを示す．この時のIDCSの比例ゲイン$K_p$は15である．周波数1Hz,振幅3mmの路面入力のときは相対変位，IDCSともに同様な挙動を示している．周波数3Hz,振幅5mmの路面入力の時は，相対変位による制御では解析モデルの計算結果と試験機の計測値で大きな差がある一方，IDCSによる制御では差が小さくなっている．
 
 \vspace{5mm}
 \begin{figure}[h]
   \begin{tabular}{cc}
-  \begin{minipage}{0.5\hsize}
+  \begin{minipage}{0.33\hsize}
   \begin{center}
-    \includegraphics[height=45mm]{figure/hils_rela_5_1.eps}
+    \includegraphics[height=45mm]{figure/hils_rela_3_1.eps}
     \end{center}
     \begin{center}
     \ (a)Relative\
     \end{center}
   \end{minipage}
-  \begin{minipage}{0.5\hsize}
+  \begin{minipage}{0.33\hsize}
      \begin{center}
-      \includegraphics[height=45mm]{figure/hils_idcs_5_1.eps}
+      \includegraphics[height=45mm]{figure/hils_linear_sus_3_1.eps}
       \end{center}
       \begin{center}
       \ (b)IDCS\
     \end{center}
   \end{minipage}
+  \begin{minipage}{0.33\hsize}
+  \begin{center}
+    \includegraphics[height=45mm]{figure/hils_linear_idcs_3_1.eps}
+    \end{center}
+    \begin{center}
+    \ (c)Hardware model\
+    \end{center}
+  \end{minipage}
   \end{tabular}
-  \begin{center}
-    \includegraphics[height=45mm]{figure/sim_idcs_5_1_nonlinear.eps}
-  \end{center}
-  \begin{center}
-    \ (c)Compare Suspension Stroke with IDCS\
-  \end{center}
-  \vspace*{2mm}
-  \caption{Comparison of Suspension Stroke(Input:1Hz 5mm)}
-    \label{fig:hils_5_1}
+\vspace*{2mm}
+  \caption{Comparison of Suspension Stroke(Input:1Hz 3mm)}
+    \label{fig:hils_3_1}
 \end{figure}
+\vspace{5mm}
 \begin{figure}[h]
   \begin{tabular}{cc}
-  \begin{minipage}{0.5\hsize}
+  \begin{minipage}{0.33\hsize}
   \begin{center}
-    \includegraphics[height=40mm]{figure/hils_rela_3_3.eps}
+    \includegraphics[height=45mm]{figure/hils_rela_5_3.eps}
     \end{center}
     \begin{center}
     \ (a)Relative\
     \end{center}
   \end{minipage}
-  \begin{minipage}{0.5\hsize}
+  \begin{minipage}{0.33\hsize}
      \begin{center}
-      \includegraphics[height=40mm]{figure/hils_idcs_3_3.eps}
+      \includegraphics[height=45mm]{figure/hils_linear_sus_5_3.eps}
       \end{center}
       \begin{center}
       \ (b)IDCS\
     \end{center}
   \end{minipage}
+  \begin{minipage}{0.33\hsize}
+  \begin{center}
+    \includegraphics[height=45mm]{figure/hils_linear_idcs_5_3.eps}
+    \end{center}
+    \begin{center}
+    \ (c)Hardware model\
+    \end{center}
+  \end{minipage}
   \end{tabular}
-  \vspace*{2mm}
-  \caption{Comparison of Suspension Stroke(Input:3Hz 3mm)}
-    \label{fig:hils_3_3}
+\vspace*{2mm}
+  \caption{Comparison of Suspension Stroke(Input:3Hz 5mm)}
+    \label{fig:hils_5_3}
 \end{figure}
+
+\newpage
+続いて非線形ダンパモデルを組み込んだIDCSを用いたHILS試験を行った．図~\ref{fig:hils_3_1_nonlinear}に周波数1Hz，振幅3mm，図~\ref{fig:hils_5_3_nonlinear}に周波数3Hz，振幅5mmの正弦波を路面入力した時の，解析モデルと試験機のサスペンションストロークを比較したグラフを示す．この時の比例ゲイン$K_p$は7である．線形ダンパを組み込んだ時よりも比例ゲイン$K_p$が小さくなったのは，非線形ダンパモデルを組み込んだことにより，ソフトウェア部の計算量が増加し，サンプル時間が3msから4msに増加したためである．
+
+グラフより非線形ダンパモデルを組み込んだIDCSを用いた制御手法においても，試験機の計測値が目標値に追従していることがわかる．試験機で計測したダンパ力と非線形ダンパモデルで計算された力を比較すると，差が生じていることがわかる．この差は非線形ダンパモデルのモデル化誤差によるものであり，試験機と試験機モデルとの間にダンパを含めた様々なモデル化誤差が生じているためゲインを高く設定することができないと考えている．
+
+\vspace{5mm}
+\begin{figure}[h]
+  \begin{tabular}{ccc}
+  \begin{minipage}{0.33\hsize}
+  \begin{center}
+    \includegraphics[height=45mm]{figure/hils_nonlinear_sus_3_1.eps}
+    \end{center}
+    \begin{center}
+    \ (a)IDCS\
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.33\hsize}
+     \begin{center}
+      \includegraphics[height=45mm]{figure/hils_nonlinear_idcs_3_1.eps}
+      \end{center}
+      \begin{center}
+      \ (b)Hardware model\
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.33\hsize}
+  \begin{center}
+    \includegraphics[height=45mm]{figure/hils_nonlinear_damper_3_1.eps}
+    \end{center}
+    \begin{center}
+    \ (c)Damper force\
+    \end{center}
+  \end{minipage}
+  \end{tabular}
+\vspace*{2mm}
+  \caption{Comparison of Suspension Stroke(Input:1Hz 3mm)}
+    \label{fig:hils_3_1_nonlinear}
+\end{figure}
+\vspace{5mm}
+\begin{figure}[h]
+  \begin{tabular}{ccc}
+  \begin{minipage}{0.33\hsize}
+  \begin{center}
+    \includegraphics[height=45mm]{figure/hils_nonlinear_sus_5_3.eps}
+    \end{center}
+    \begin{center}
+    \ (a)IDCS\
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.33\hsize}
+     \begin{center}
+      \includegraphics[height=45mm]{figure/hils_nonlinear_idcs_5_3.eps}
+      \end{center}
+      \begin{center}
+      \ (b)Hardware model\
+    \end{center}
+  \end{minipage}
+  % \begin{minipage}{0.33\hsize}
+  %    \begin{center}
+  %     \includegraphics[height=55mm]{figure/hils_nonlinear_damper_5_3.eps}
+  %     \end{center}
+  %     \begin{center}
+  %     \ (c)Damper force\
+  %   \end{center}
+  % \end{minipage}
+  \end{tabular}
+\vspace*{2mm}
+  \caption{Comparison of Suspension Stroke(Input:3Hz 5mm)}
+    \label{fig:hils_5_3_nonlinear}
+\end{figure}
+
+3Hz,5mmのダンパ力が取れていなかったので，取り次第データを乗せます…
 
 \newpage
 \section{結論}
+HILSはソフトウェア部の計算結果に基づいてハードウェアの入力値を決定し，システム全体の挙動を再現する．そのためソフトウェア部とハードウェア部の同期が必要であり，高い制御精度が求められる．本研究では，HILSシステムの再現性の向上を目的として，HILSシステムにおけるIDCS制御手法の有効性の検証を行った．アクチュエータの制御手法として，路面-車体間の相対変位を用いる手法とIDCSを用いた制御手法の二つを用い比較した．また非線形特性を表したダンパモデルをIDCS制御系に組み込み，非線形特性を考慮した制御を行い，解析モデルと試験機のサスペンションストローク，非線形ダンパモデルの計算結果と試験機で計測したダンパ力を比較し，有効性を検証した．
 
-\newpage
-\section*{謝辞}
+ボード線図を用いた周波数応答特性，正弦波入力試験を実施し，相対変位を用いた制御手法とIDCSを用いた制御手法を比較した．相対変位を用いた制御手法は，ボード線図より試験機の共振を強める入力をしていることがわかり，路面入力試験においても周波数を大きくすると解析モデルの計算結果と試験機の計測結果の差が大きくなることが確認できた．IDCSを用いた制御手法では，周波数を高くしても解析モデルの計算結果と試験機の計測結果の差が大きくならなかった．そのため高周波領域において，IDCSを用いた制御手法は，相対変位を用いた制御手法よりも有効であると言える．
 
+また非線形ダンパモデルを組み込んだIDCSを用いた制御手法の正弦波入力試験でも，解析モデルの計算結果と試験機の計測結果に大きな差は生まれなかった．
+
+IDCSを用いた制御手法において，線形・非線形ダンパ問わず実測したダンパ力と計算したダンパ力には差が生まれている．その他にも試験機モデルでは試験機のばねの質量を考慮していない等様々なモデル化誤差が存在している．そのため，本研究で用いたIDCS制御系ではゲインを高く設定することができなかった．IDCS制御手法を用いてHILSシステムの再現性をより高めるためには，試験機と試験機との間のモデル化誤差を小さくする必要があることがわかった．
 
 \newpage
 \begin{thebibliography}{99}
 \bibitem{uno}宇野高明，車両運動性能とシャシーメカニズム，グランプリ出版，1994
 \bibitem{nasugawa}茄子川捷久，宮下義孝，汐川満則，自動車の走行性能と試験方法，山海堂，2004
 \bibitem{pic_sus.net}https://nge.jp/wp-content/uploads/2015/08/shutterstock\_22066612.jpg
+\bibitem{chassis_handbook}社団法人自動車技術会，自動車技術会ハンドブック５　設計（シャシ）編，社団法人自動車技術会，p,7,10,25，(2005)
+\bibitem{daisyarin}大車林，三栄書房，(2003)
+\bibitem{thesis_airpot}Keita Koumo, Naoto Abe, Taichi Matsuoka, Switching Control based on the mode of vibration for Dynamic Absorber, IEEE Control Conference (ASCC), 2015 10th Asian
+\bibitem{picture_airpot}$\rm{http://www.airpot.jp/airpot.html}$
 \bibitem{exp_hils1}永井正夫，吉田秀久，Noomwongs Nuksit，横井隆，川眞田智，小林克宏，タイヤHIL シミュレータによる車両運動性能の研究(第1報) : タイヤHIL シミュレータの開発，自動車技術会論文集，Vol35，No.2，(2004)，pp.147-152
 \bibitem{exp_hils2}山口輝也, 実ヨーダンパを用いたHardware-In-the-Loopシミュレーションによる鉄道車両の蛇行動安定性試験(試験環境の構築と安定的な検証), 日本機械学会論文集,C編Vol.79 No.806(2013-10),pp.131-142
 \bibitem{toyota_hils}https://www.toyota.co.jp/jpn/company/history/75years/data/automotive\_business/ \\ products\_technology/technology\_development/performance/images/supplement\_img01.jpg
@@ -905,9 +1083,20 @@ HILSシステムを用いて試験をする前にハードウェア部を1自由
 \bibitem{dspace}http://www.dspace.com/ja/jpn/home.cfm
 \bibitem{carbody_model}社団法人\ 自動車技術会，自動車技術ハンドブック5設計(シャシ)編，社団法人\ 自動車技術会，(1990)，p. 25
 \bibitem{method_idcs}青木 健悟，IDCSを用いた柔軟アームを有するロボットの振動制御，日本ロボット学会誌，Vol.31，No.10，(2010)，pp.1001-1008
-
-\bibitem{maxon}$\rm{http://academy.maxonjapan.co.jp/mmc}$
-
 \end{thebibliography}
+
+\newpage
+\section*{謝辞}
+本研究は，明治大学理工学部機械工学科ビークルダイナミクス研究室，椎葉太一教授のご指導の下で行われました．今年はCOCID-19の影響もあり，例年とは異なる研究活動を強いられることになりましたが，大変手厚い指導を受けさせていただきました．また大学院入試直前で研究活動の進捗がよくないときでも，励ましの言葉をいただきました．別の場所で研究することになりましたが，1年間先生に指導していただいたこと，この研究室での経験を活かし精進していきます．ありがとうございました．
+
+ビークルダイナミクス研究室の先輩方には，1年間通じて大変お世話になりました．特に修士2年の蔵本 藻奈美さんにはHILS班の先輩として，数え切れないほどのアドバイスを頂きました．自分の都合でなかなか研究が進まない中，いつも自分の質問に丁寧に答えていただきました．また理解が遅く，ものを壊さないか等様々な心配をおかけいたしました．蔵本さんのおかげで，HILSに加えIDCSの理解がとても深まり，自分の研究が形になったと思っています．ありがとうございました．修士2年の井上 聖奈さん，石井 克英さん，溝渕 陸さんには，研究室で騒がしい自分にも暖かく接し，研究会等で自分の拙い発表に対しても質問や助言をしていただきました．ありがとうございました．修士1年の楊さんとは，途中から研究テーマが近くなったこともあり，たくさんのやり取りさせていただきました．自分の下手な説明を真剣に聞いていただきありがとうございました．修士1年の増田さんには一度もお会いすることがありませんでしたが，研究会で自分が質問をされた際にうまく答えることができず悔しい思いをしたことを覚えています．わかりやすく説明できるように，これからも精進していきます．ありがとうございました．
+
+同期である羽毛田 真吾君，上田 和希君，日高 彰典君，富島 しょうご君，宮本 岳瑠君，棚橋 望君，海野 崇宏君，林 和樹君，佐藤 雅弘君，豊田 幸輔さんにはとてもお世話になりました．特に同じHILS班だった佐藤雅大君には一年間を通してお世話になりました．いつもくだらない話ばかりしない自分に付き合っていただきありがとうございました．おかげでこんな状況でしたが，とても楽しい研究室生活が送ることができました．豊田さんは途中からでしたが，一緒に作業することが何かと多かったと思います．特に試験機の組立を不器用な自分と一緒にやっていただきありがとうございました．林君にもとてもお世話になりました．年末，研究進捗が芳しくない自分の研究を手伝っていただきました．このおかげで卒業できた！は言いすぎですが，毎日何かしらを進めている林と話すことで，自分も頑張らなければと思い頑張ることができました．海野君とは卒論提出直前期間は朝七時に研究室に行き，一緒に朝ご飯を食べ，夜は一緒に変えるという生活をしていました．海野が朝早く来るから，夜遅くまで頑張っているから自分もまけていられないと重い頑張ることができました．棚橋君はいつも何かに怒っていましたね，3Dプリンターの扉は優しく締めてください．音にびっくりします．宮本君には卒論直前期間にたくさんのパンをもらい，休憩中に食べながら息抜きに世間話をしてくれました．あんこクロワッサンおいしかったです．富島君は研究室が一緒になる前から一方的に知られていたみたいで怖かったです．ちょっと馬鹿にしたような態度を取られていた気がしますが，大きくなって帰ってくるので見ておいてください．日高君は本人にも言いましたが，研究会で必ず何か成果をあげてくるのがすごいなと．交通物流部門大会のバイトも一緒にやりましたね，僕と日高のWi-fiは最強です．上田君は一番最初の研修で真っ先に進めてくれたり，コツコツ努力をするのが得意で尊敬してました．最後の最後に一緒に帰れて楽しかっただけに，もっと仲良くなりたかったです．羽毛田君はゼミ長の仕事を嫌な顔せずに引き受けてくれたことに感謝です．気づいたら・・・しないようには気を付けてください．
+
+最後に，これまで家族の多大な支援があったため，自分のやりたいことを満足に学生生活を送ることができました．まだ2年間も学生を続けて，加えて一人暮らしもさせていただくため，迷惑をかけますがその分，それ以上に努力をするので見守ってくれると嬉しいです．いつも支えてくれる両親に感謝の意を表して結びといたします．
+
+\begin{flushright}
+     中川 夏
+\end{flushright}
 
 \end{document}

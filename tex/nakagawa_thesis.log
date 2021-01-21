@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.3-191112-2.6 (utf8.sjis) (TeX Live 2020/W32TeX) (preloaded format=platex 2020.12.14)  21 JAN 2021 00:16
+This is e-pTeX, Version 3.14159265-p3.8.3-191112-2.6 (utf8.sjis) (TeX Live 2020/W32TeX) (preloaded format=platex 2020.12.14)  22 JAN 2021 01:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -353,7 +353,11 @@ File: l3backend-dvips.def 2020-09-24 L3 backend support: dvips
 \g__pdf_backend_annotation_int=\count281
 \g__pdf_backend_link_int=\count282
 \g__pdf_backend_link_sf_int=\count283
-) (./nakagawa_thesis.aux)
+) (./nakagawa_thesis.aux
+
+LaTeX Warning: Label `fig:suspension' multiply defined.
+
+)
 \openout1 = `nakagawa_thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
@@ -435,7 +439,7 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 
  [1
 
-]
+] [2]
 LaTeX Font Info:    Font shape `JT1/mc/b/n' in size <17.28> not available
 (Font)              Font shape `JT1/mc/bx/n' tried instead on input line 35.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <17.28> not available
@@ -450,79 +454,83 @@ Overfull \hbox (12.0pt too wide) in paragraph at lines 44--53
 [][] 
  []
 
-[2]
-File: figure/hils.eps Graphic file (type eps)
- <figure/hils.eps>
-Overfull \hbox (12.0pt too wide) in paragraph at lines 66--75
+[3]
+File: figure/airpot_1.eps Graphic file (type eps)
+ <figure/airpot_1.eps>
+Overfull \hbox (12.0pt too wide) in paragraph at lines 68--77
 [][] 
  []
 
-[3]
-File: figure/HILS_loop.eps Graphic file (type eps)
- <figure/HILS_loop.eps> [4]
-File: figure/HILS_machine.eps Graphic file (type eps)
- <figure/HILS_machine.eps> [5]
+[4]
+File: figure/hils.eps Graphic file (type eps)
+ <figure/hils.eps>
+Overfull \hbox (12.0pt too wide) in paragraph at lines 90--99
+[][] 
+ []
 
-LaTeX Warning: Reference `' on page 6 undefined on input line 125.
+[5] [6]
+File: figure/HILS_loop.eps Graphic file (type eps)
+ <figure/HILS_loop.eps> [7]
+File: figure/HILS_machine.eps Graphic file (type eps)
+ <figure/HILS_machine.eps> [8]
+
+LaTeX Warning: Reference `' on page 9 undefined on input line 149.
 
 File: figure/ecmax40.eps Graphic file (type eps)
 <figure/ecmax40.eps>
-Overfull \hbox (2.28001pt too wide) in paragraph at lines 130--156
+Overfull \hbox (2.28001pt too wide) in paragraph at lines 154--180
 [][]$[]$[] []$[]$[] 
  []
 
 
-Overfull \hbox (1.63991pt too wide) in paragraph at lines 182--187
+Overfull \hbox (1.63991pt too wide) in paragraph at lines 206--211
  [] 
  []
 
 
-Overfull \hbox (2.28001pt too wide) in paragraph at lines 160--189
+Overfull \hbox (2.28001pt too wide) in paragraph at lines 184--213
 [][]$[]$[] []$[]$[] 
  []
 
-[6]
+[9]
 File: figure/epos.eps Graphic file (type eps)
  <figure/epos.eps>
-Overfull \hbox (41.4769pt too wide) in paragraph at lines 212--221
+Overfull \hbox (41.4769pt too wide) in paragraph at lines 236--245
  [] 
  []
 
 
-Overfull \hbox (2.28001pt too wide) in paragraph at lines 197--223
+Overfull \hbox (2.28001pt too wide) in paragraph at lines 221--247
 [][]$[]$[] []$[]$[] 
  []
 
 File: figure/rs_150_24.eps Graphic file (type eps)
-<figure/rs_150_24.eps> [7]
-
-LaTeX Warning: Reference `' on page 8 undefined on input line 236.
-
+<figure/rs_150_24.eps> [10]
 File: figure/serial_send.eps Graphic file (type eps)
-<figure/serial_send.eps> [8]
+ <figure/serial_send.eps> [11]
 File: figure/epos_studio.eps Graphic file (type eps)
- <figure/epos_studio.eps> [9]
+ <figure/epos_studio.eps> [12]
 File: figure/slider_crank.eps Graphic file (type eps)
  <figure/slider_crank.eps>
 File: figure/Lookuptable.eps Graphic file (type eps)
- <figure/Lookuptable.eps> [10]
+ <figure/Lookuptable.eps> [13]
 File: figure/tclz_20na.eps Graphic file (type eps)
  <figure/tclz_20na.eps>
 File: figure/td_96a.eps Graphic file (type eps)
  <figure/td_96a.eps>
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 318--336
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 342--360
 [][] 
  []
 
-[11]
+[14]
 File: figure/il_300.eps Graphic file (type eps)
  <figure/il_300.eps>
-Overfull \hbox (14.93073pt too wide) in paragraph at lines 383--385
+Overfull \hbox (14.93073pt too wide) in paragraph at lines 407--409
  [] 
  []
 
 
-Overfull \hbox (2.28001pt too wide) in paragraph at lines 381--409
+Overfull \hbox (2.28001pt too wide) in paragraph at lines 405--433
 [][]$[]$[] []$[]$[] 
  []
 
@@ -530,62 +538,82 @@ File: figure/amp.eps Graphic file (type eps)
 <figure/amp.eps>
 File: figure/power_supply.eps Graphic file (type eps)
  <figure/power_supply.eps>
-Overfull \hbox (2.28001pt too wide) in paragraph at lines 413--429
+Overfull \hbox (2.28001pt too wide) in paragraph at lines 437--453
 [][]$[]$[] []$[]$[] 
  []
 
-[12]
+[15]
 File: figure/ds1104.eps Graphic file (type eps)
  <figure/ds1104.eps>
 File: figure/conpane.eps Graphic file (type eps)
  <figure/conpane.eps>
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 437--453
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 461--477
 [][] 
  []
 
 
-LaTeX Warning: Reference `fig:contrl_desk' on page 13 undefined on input line 455.
+LaTeX Warning: Reference `fig:contrl_desk' on page 16 undefined on input line 479.
 
 File: figure/control_desk.eps Graphic file (type eps)
-<figure/control_desk.eps> [13]
+<figure/control_desk.eps> [16]
 File: figure/analysis_model.eps Graphic file (type eps)
  <figure/analysis_model.eps>
-Overfull \hbox (2.28001pt too wide) in paragraph at lines 482--505
+Overfull \hbox (2.28001pt too wide) in paragraph at lines 506--529
 [][]$[]$[] []$[]$[] 
  []
 
-[14]
+[17]
 File: figure/block_diagram.eps Graphic file (type eps)
  <figure/block_diagram.eps>
 File: figure/relative_diagram.eps Graphic file (type eps)
- <figure/relative_diagram.eps> [15]
+ <figure/relative_diagram.eps> [18]
 File: figure/idcs_block.eps Graphic file (type eps)
- <figure/idcs_block.eps> [16]
-File: figure/bode_inverse.eps Graphic file (type eps)
- <figure/bode_inverse.eps>
-Overfull \hbox (47.49753pt too wide) in paragraph at lines 565--566
+ <figure/idcs_block.eps> [19]
+File: figure/idcs_diagram.eps Graphic file (type eps)
+ <figure/idcs_diagram.eps>
+Overfull \hbox (32.2012pt too wide) in paragraph at lines 590--592
  [] 
  []
 
 File: figure/hardware_model.eps Graphic file (type eps)
 <figure/hardware_model.eps>
-Overfull \hbox (2.28001pt too wide) in paragraph at lines 572--596
+Overfull \hbox (2.28001pt too wide) in paragraph at lines 598--622
 [][]$[]$[] []$[]$[] 
  []
 
-[17]
-File: figure/idcs_diagram.eps Graphic file (type eps)
- <figure/idcs_diagram.eps>
-Overfull \hbox (6.5134pt too wide) in paragraph at lines 605--607
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[20]
+File: figure/bode_inverse_Kp10.eps Graphic file (type eps)
+ <figure/bode_inverse_Kp10.eps>
+Overfull \hbox (6.04898pt too wide) in paragraph at lines 632--633
  [] 
  []
 
-[18] [19]
+File: figure/bode_inverse_Kp50.eps Graphic file (type eps)
+<figure/bode_inverse_Kp50.eps>
+Overfull \hbox (6.04898pt too wide) in paragraph at lines 640--641
+ [] 
+ []
+
+File: figure/bode_inverse_Kp100.eps Graphic file (type eps)
+<figure/bode_inverse_Kp100.eps>
+Overfull \hbox (6.04898pt too wide) in paragraph at lines 648--649
+ [] 
+ []
+
+
+Overfull \hbox (13.44363pt too wide) in paragraph at lines 629--656
+[][]
+ []
+
+[21] [22]
 File: figure/damper_x_1_Fx.eps Graphic file (type eps)
  <figure/damper_x_1_Fx.eps>
 File: figure/damper_x_1_Fv.eps Graphic file (type eps)
  <figure/damper_x_1_Fv.eps>
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 652--671
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 700--719
 [][]
  []
 
@@ -593,79 +621,161 @@ File: figure/damper_3_x_Fx.eps Graphic file (type eps)
 <figure/damper_3_x_Fx.eps>
 File: figure/damper_3_x_Fv.eps Graphic file (type eps)
  <figure/damper_3_x_Fv.eps>
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 677--696
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 725--744
 [][]
  []
 
-[20]
+[23]
+File: figure/bode_diagram.eps Graphic file (type eps)
+ <figure/bode_diagram.eps>
+File: figure/bode_hardware.eps Graphic file (type eps)
+ <figure/bode_hardware.eps>
+File: figure/bode_comparison.eps Graphic file (type eps)
+ <figure/bode_comparison.eps>
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 764--783
+[][]
+ []
+
+[24]
 File: figure/sim_block_diagram(relative).eps Graphic file (type eps)
  <figure/sim_block_diagram(relative).eps>
 File: figure/sim_block_diagram(idcs).eps Graphic file (type eps)
- <figure/sim_block_diagram(idcs).eps> [21]
-File: figure/sim_rela_5_1.eps Graphic file (type eps)
- <figure/sim_rela_5_1.eps>
-File: figure/sim_idcs_5_1.eps Graphic file (type eps)
- <figure/sim_idcs_5_1.eps>
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 731--750
+ <figure/sim_block_diagram(idcs).eps> [25]
+
+LaTeX Warning: Reference `fig:sim_5_1' on page 26 undefined on input line 811.
+
+File: figure/sim_rela_3_1.eps Graphic file (type eps)
+<figure/sim_rela_3_1.eps>
+File: figure/sim_linear_3_1.eps Graphic file (type eps)
+ <figure/sim_linear_3_1.eps>
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 817--836
 [][]
  []
 
-File: figure/sim_rela_3_3.eps Graphic file (type eps)
-<figure/sim_rela_3_3.eps>
-File: figure/sim_idcs_3_3.eps Graphic file (type eps)
- <figure/sim_idcs_3_3.eps>
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 754--773
+File: figure/sim_rela_5_3.eps Graphic file (type eps)
+<figure/sim_rela_5_3.eps>
+File: figure/sim_linear_5_3.eps Graphic file (type eps)
+ <figure/sim_linear_5_3.eps>
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 840--859
 [][]
  []
 
+[26]
 File: figure/sim_rela_2_5.eps Graphic file (type eps)
-<figure/sim_rela_2_5.eps>
-File: figure/sim_idcs_2_5.eps Graphic file (type eps)
- <figure/sim_idcs_2_5.eps>
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 777--796
+ <figure/sim_rela_2_5.eps>
+File: figure/sim_linear_2_5.eps Graphic file (type eps)
+ <figure/sim_linear_2_5.eps>
+Overfull \hbox (14.99998pt too wide) in paragraph at lines 865--884
 [][]
  []
 
-[22]
+[27]
 File: figure/sim_idcs_5_1_nonlinear.eps Graphic file (type eps)
  <figure/sim_idcs_5_1_nonlinear.eps>
 File: figure/sim_idcs_3_3_nonlinear.eps Graphic file (type eps)
  <figure/sim_idcs_3_3_nonlinear.eps>
 File: figure/sim_idcs_2_5_nonlinear.eps Graphic file (type eps)
- <figure/sim_idcs_2_5_nonlinear.eps> [23]
-File: figure/hils_rela_5_1.eps Graphic file (type eps)
- <figure/hils_rela_5_1.eps>
-File: figure/hils_idcs_5_1.eps Graphic file (type eps)
- <figure/hils_idcs_5_1.eps>
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 836--854
-[][] 
+ <figure/sim_idcs_2_5_nonlinear.eps> [28]
+File: figure/hils_rela_3_1.eps Graphic file (type eps)
+ <figure/hils_rela_3_1.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 927--928
+ [] 
  []
 
-File: figure/sim_idcs_5_1_nonlinear.eps Graphic file (type eps)
-<figure/sim_idcs_5_1_nonlinear.eps>
-File: figure/hils_rela_3_3.eps Graphic file (type eps)
- <figure/hils_rela_3_3.eps>
-File: figure/hils_idcs_3_3.eps Graphic file (type eps)
- <figure/hils_idcs_3_3.eps>
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 865--884
+File: figure/hils_linear_sus_3_1.eps Graphic file (type eps)
+<figure/hils_linear_sus_3_1.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 935--936
+ [] 
+ []
+
+File: figure/hils_linear_idcs_3_1.eps Graphic file (type eps)
+<figure/hils_linear_idcs_3_1.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 943--944
+ [] 
+ []
+
+
+Overfull \hbox (13.44363pt too wide) in paragraph at lines 924--951
 [][]
  []
 
-[24] [25] [26] [27] (./nakagawa_thesis.aux)
+File: figure/hils_rela_5_3.eps Graphic file (type eps)
+<figure/hils_rela_5_3.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 959--960
+ [] 
+ []
+
+File: figure/hils_linear_sus_5_3.eps Graphic file (type eps)
+<figure/hils_linear_sus_5_3.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 967--968
+ [] 
+ []
+
+File: figure/hils_linear_idcs_5_3.eps Graphic file (type eps)
+<figure/hils_linear_idcs_5_3.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 975--976
+ [] 
+ []
+
+
+Overfull \hbox (13.44363pt too wide) in paragraph at lines 956--983
+[][]
+ []
+
+[29]
+File: figure/hils_nonlinear_sus_3_1.eps Graphic file (type eps)
+ <figure/hils_nonlinear_sus_3_1.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 997--998
+ [] 
+ []
+
+File: figure/hils_nonlinear_idcs_3_1.eps Graphic file (type eps)
+<figure/hils_nonlinear_idcs_3_1.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 1005--1006
+ [] 
+ []
+
+File: figure/hils_nonlinear_damper_3_1.eps Graphic file (type eps)
+<figure/hils_nonlinear_damper_3_1.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 1013--1014
+ [] 
+ []
+
+
+Overfull \hbox (13.44363pt too wide) in paragraph at lines 994--1021
+[][]
+ []
+
+File: figure/hils_nonlinear_sus_5_3.eps Graphic file (type eps)
+<figure/hils_nonlinear_sus_5_3.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 1029--1030
+ [] 
+ []
+
+File: figure/hils_nonlinear_idcs_5_3.eps Graphic file (type eps)
+<figure/hils_nonlinear_idcs_5_3.eps>
+Overfull \hbox (9.60468pt too wide) in paragraph at lines 1037--1038
+ [] 
+ []
+
+[30] [31] [32] [33] [34] (./nakagawa_thesis.aux)
 Package rerunfilecheck Info: File `nakagawa_thesis.out' has not changed.
-(rerunfilecheck)             Checksum: FE2FFD04257692FCBFF7B2DEF98E1886;1800.
+(rerunfilecheck)             Checksum: A81E12482A8DAC970463014511612693;1960.
 
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 7496 strings out of 479854
- 110288 string characters out of 5884980
- 432173 words of memory out of 5000000
- 24573 multiletter control sequences out of 15000+600000
+ 7558 strings out of 479854
+ 112152 string characters out of 5884980
+ 434768 words of memory out of 5000000
+ 24622 multiletter control sequences out of 15000+600000
  440009 words of font info for 116 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 86i,16n,90p,1044b,617s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 86i,16n,90p,1845b,617s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on nakagawa_thesis.dvi (27 pages, 122688 bytes).
+Output written on nakagawa_thesis.dvi (34 pages, 153744 bytes).
